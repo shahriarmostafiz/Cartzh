@@ -4,7 +4,7 @@ import "../globals.css";
 import Header from "@/components/Header";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
-import { updateCart } from "@/action";
+// import { updateCart } from "@/action";
 // import { updateCart } from "@/action";
 
 const roboto = Roboto({
@@ -24,7 +24,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  await updateCart()
+  // await updateCart()
   return (
     <html lang="en">
       <head>

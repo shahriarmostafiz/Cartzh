@@ -30,8 +30,8 @@ const ProductInfo = ({ product }) => {
                     <span>Availability: </span>
                     {
                         product?.stock > 0 ?
-                            <span className="text-green-600"> "In Stock" </span> :
-                            <span className="text-Red-600"> "Out of Stock" </span>
+                            <span className="text-green-600"> In Stock </span> :
+                            <span className="text-Red-600"> Out of Stock </span>
 
                     }
                 </p>
