@@ -1,6 +1,6 @@
+"use client"
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-"use client"
 const RegisterForm = () => {
     const [regErr, setRegErr] = useState(null)
     const router = useRouter()
