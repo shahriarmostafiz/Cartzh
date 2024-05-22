@@ -1,6 +1,7 @@
 import React from 'react';
-import Gallery from './gallery';
+
 import ProductInfo from './ProductInfo';
+import Gallery from './Gallery';
 
 const Detail = ({ product }) => {
     return (
