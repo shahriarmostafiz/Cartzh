@@ -80,7 +80,7 @@ const CheckoutController = ({ checkoutProducts, cartInfo, userInfo }) => {
     let productIds = checkoutProducts?.map(product => product.id)
     let orderSummery = checkoutProducts?.map((product, idx) => {
         tSum = tSum + (product.discountedPrice * getQuantity(cartInfo, product.id))
-        return (`item - ${idx + 1} ${product?.name} - size: ${product?.size}  x ${getQuantity(cartInfo, product?.id)}`,)
+        return (`item - ${idx + 1} ${product?.name} - size: ${product?.size}  x ${getQuantity(cartInfo, product?.id)}`)
 
     })
 
