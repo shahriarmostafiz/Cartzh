@@ -1,15 +1,15 @@
-import React from 'react';
+import Link from "next/link";
 
-const BreadCrumb = () => {
+const BreadCrumb = ({ page }) => {
     return (
         <div className="container py-4 flex items-center gap-3">
-            <a href="../index.html" className="text-primary text-base">
+            <Link href="/" className="text-primary text-base">
                 <i className="fa-solid fa-house" />
-            </a>
+            </Link>
             <span className="text-sm text-gray-400">
                 <i className="fa-solid fa-chevron-right" />
             </span>
-            <p className="text-gray-600 font-medium">Product</p>
+            <p className="text-gray-600 font-medium">{page}</p>
         </div>
 
     );

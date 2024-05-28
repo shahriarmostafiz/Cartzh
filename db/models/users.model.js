@@ -14,12 +14,12 @@ const userSchema = new Schema({
         required: true
     },
     shippingAddress: {
-        type: String,
+        type: Object,
         required: false
     },
     billingAddress: {
-        type: String,
-        required: true
+        type: Object,
+        required: false
     },
     image: {
         type: String,

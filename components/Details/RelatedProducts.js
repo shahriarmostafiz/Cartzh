@@ -1,8 +1,10 @@
 import React from 'react';
 import ProductCard from '../Home/Products/ProductCard';
+import { getProductsByCategory } from '@/db/queries';
 
-const RelatedProducts = async ({ category }) => {
-    const products = []
+const RelatedProducts = async ({ category, id }) => {
+    const categoryProduct = await getProductsByCategory(category)
+    const products = categoryProduct.filter(product => product.id !== id)
     return (
         <div className="container pb-16">
             <h2 className="text-2xl font-medium text-gray-800 uppercase mb-6">

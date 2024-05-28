@@ -1,6 +1,16 @@
+import { auth } from '@/auth';
+import AddToCart from '@/components/shared/AddToCart';
+import { getUserInfo } from '@/db/queries';
 import Link from 'next/link';
 
-const ProductCard = ({ product }) => {
+const ProductCard = async ({ product }) => {
+    const session = await auth()
+    const ratingArray = Array(parseInt(product?.rating)).fill("val")
+    let userInfo = null
+    if (session) {
+        userInfo = await getUserInfo(session?.user?.email)
+    }
+
     return (
         <div className="bg-white shadow rounded overflow-hidden group flex flex-col">
             <div className="relative">
@@ -16,7 +26,7 @@ const ProductCard = ({ product }) => {
               justify-center gap-2 opacity-0 group-hover:opacity-100 transition"
                 >
                     <Link
-                        href="#"
+                        href={`/detail/${product?.id}`}
                         className="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
                         title="view product"
                     >
@@ -43,7 +53,13 @@ const ProductCard = ({ product }) => {
                 </div>
                 <div className="flex items-center">
                     <div className="flex gap-1 text-sm text-yellow-400">
-                        <span>
+                        {
+                            ratingArray?.map((rating, idx) => <span key={idx}>
+                                <i className="fa-solid fa-star" />
+                            </span>)
+                        }
+
+                        {/* <span>
                             <i className="fa-solid fa-star" />
                         </span>
                         <span>
@@ -51,23 +67,19 @@ const ProductCard = ({ product }) => {
                         </span>
                         <span>
                             <i className="fa-solid fa-star" />
-                        </span>
-                        <span>
-                            <i className="fa-solid fa-star" />
-                        </span>
-                        <span>
-                            <i className="fa-solid fa-star" />
-                        </span>
+                        </span> */}
                     </div>
-                    <div className="text-xs text-gray-500 ml-3">(150)</div>
+                    <div className="text-xs text-gray-500 ml-3">({product?.reviews})</div>
                 </div>
             </div>
-            <Link
-                href="#"
-                className="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition"
-            >
-                Add to cart
-            </Link>
+            {
+                session?.user && userInfo?.id ? <AddToCart productId={product?.id} userId={userInfo?.id} quantity={1} /> : <Link
+                    href={`/detail/${product?.id}`}
+                    className="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition"
+                >
+                    View Details
+                </Link>
+            }
         </div>
 
     );

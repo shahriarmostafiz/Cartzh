@@ -1,8 +1,7 @@
-import React from 'react';
 
-const Description = ({ description }) => {
+const Description = ({ description, size, color }) => {
     return (
-        <div className="container pb-16">
+        <div className="container pb-16 mt-4">
             <h3 className="border-b border-gray-200 font-roboto text-gray-800 pb-3 font-medium">
                 Product details
             </h3>
@@ -10,6 +9,14 @@ const Description = ({ description }) => {
                 <div className="text-gray-600">
                     {
                         description
+                    }
+                    <br />
+                    Size : {
+                        size.toUpperCase()
+                    }
+                    <br />
+                    Color : {
+                        color
                     }
                 </div>
             </div>

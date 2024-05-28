@@ -5,7 +5,7 @@ import NewArrival from "@/components/Home/NewArrival";
 import TrendingProducts from "@/components/Home/Products/TrendingProducts";
 import Sale from "@/components/Home/Sale";
 
-export default function Home() {
+export default function Home({ searchParams: { search } }) {
   return (
     <>
       <Banner />

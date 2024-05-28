@@ -1,6 +1,7 @@
 "use client"
 
 import { login } from "@/action";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -12,7 +13,10 @@ const LoginForm = () => {
         event.preventDefault()
         try {
             const formData = new FormData(event.currentTarget)
-            const response = await login(formData)
+            const email = formData.get("email")
+            const password = formData.get("password")
+
+            const response = await login({ email, password })
             console.log(response);
             if (response.error) {
                 setLoginError(response.error)
@@ -63,9 +67,9 @@ const LoginForm = () => {
                         Remember me
                     </label>
                 </div>
-                <a href="#" className="text-primary">
+                <Link href="#" className="text-primary">
                     Forgot password
-                </a>
+                </Link>
             </div>
             <div className="mt-4">
                 <button
@@ -75,6 +79,9 @@ const LoginForm = () => {
                     Login
                 </button>
             </div>
+            {
+                loginError && <p className="py-4">{loginError}</p>
+            }
         </form>
 
     );

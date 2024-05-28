@@ -1,44 +1,51 @@
 "use client"
+import { registerUser } from '@/action';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 const RegisterForm = () => {
     const [regErr, setRegErr] = useState(null)
     const router = useRouter()
+    // const { replace } = useRouter()
+
     const handleReg = async (event) => {
         event.preventDefault()
+        setRegErr(prev => null)
         try {
             const formData = new FormData(event.currentTarget)
+            // console.log(formData);
             const name = formData.get("name")
 
 
             const email = formData.get("email")
             const password = formData.get("password")
             const confirm = formData.get("confirm")
-            const agreeToTerms = formData.get('agreement') !== null;
+            const agreeToTerms = event.target.aggreement.checked
+            console.log({ name, email, confirm, agreeToTerms, password });
             if (!agreeToTerms) {
-                setRegErr("Please agree to terms and conditions")
-            }
-            if (confirm !== password) {
-                setRegErr("password do not match")
+                setRegErr(prev => "Please agree to terms and conditions")
                 return
             }
-            const res = await fetch("/api/auth/register", {
-                method: "POST",
-                headers: {
-                    "content-type": "application/json"
-                },
-                body: JSON.stringify({
-                    name, email, password
-                })
+            if (confirm !== password) {
+                setRegErr(prev => "password do not match")
+                return
+            }
+            const user = await registerUser({
+                email, password, name
             })
+            if (user === "found") {
+                setRegErr("User with this Email exists")
+                return
+            }
+            else {
+                router.push("/login")
+            }
 
-            res.status === 201 && router.push("/login")
         } catch (error) {
             setRegErr(error.message)
         }
     }
     return (
-        <form action="#" method="post" autoComplete="off">
+        <form onSubmit={handleReg} autoComplete="off">
             <div className="space-y-2">
                 <div>
                     <label htmlFor="name" className="text-gray-600 mb-2 block">
@@ -93,8 +100,8 @@ const RegisterForm = () => {
                 <div className="flex items-center">
                     <input
                         type="checkbox"
-                        name="aggrement"
-                        id="aggrement"
+                        name="aggreement"
+                        id="aggreement"
                         className="text-primary focus:ring-0 rounded-sm cursor-pointer"
                     />
                     <label
@@ -108,6 +115,7 @@ const RegisterForm = () => {
                     </label>
                 </div>
             </div>
+
             <div className="mt-4">
                 <button
                     type="submit"
@@ -116,8 +124,26 @@ const RegisterForm = () => {
                     create account
                 </button>
             </div>
+            {
+                regErr && <div className="mt-4 text-red-600 font-medium">{regErr}</div>
+            }
         </form>
     );
 };
 
 export default RegisterForm;
+
+
+
+
+// const res = await fetch("/api/auth/register", {
+//     method: "POST",
+//     headers: {
+//         "content-type": "application/json"
+//     },
+//     body: JSON.stringify({
+//         name, email, password
+//     })
+// })
+
+// res.status === 201 && router.push("/login")
