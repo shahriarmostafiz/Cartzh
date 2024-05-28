@@ -1,6 +1,7 @@
 import { auth } from '@/auth';
 import AddToCart from '@/components/shared/AddToCart';
 import { getUserInfo } from '@/db/queries';
+import Image from 'next/image';
 import Link from 'next/link';
 
 const ProductCard = async ({ product }) => {
@@ -14,7 +15,7 @@ const ProductCard = async ({ product }) => {
     return (
         <div className="bg-white shadow rounded overflow-hidden group flex flex-col">
             <div className="relative">
-                <img
+                <Image
                     src={product?.gallery[0]}
                     alt="product 1"
                     className="w-full"
