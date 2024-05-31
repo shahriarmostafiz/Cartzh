@@ -131,7 +131,7 @@
   "city": "City",
   "phone": "Phone number",
   "orderSummery": "order summary",
-  "noProductsAdded": " No Products Added",
+  "noProductsAdded": "No Products Added to cart",
   "subTotal": "subtotal",
   "shipping": "shipping",
   "free": "Free",
@@ -147,5 +147,6 @@
 
   "orderInfo": "Your order has been placed",
   "congrats": "Congratulations",
-  "cartRemoveMessage": "Products will be removed from the cart in 30 minutes from the time they are are added to cart  if payment is not completed "
+  "cartRemoveMessage": "Products will be removed from the cart in 30 minutes from the time they are are added to cart  if payment is not completed ",
+  "noProductsOnWishlist": "No products added to wish list"
 }

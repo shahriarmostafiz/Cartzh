@@ -34,9 +34,9 @@ const WishListAction = ({ userId, wishList, productId, lang, dictionary, iconBut
                 iconButton ? <span
 
                     className="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                    title="add to wishlist"
+                    title={liked ? "remove from wishlist" : "add to wishlist"}
                 >
-                    <i className="fa-solid fa-heart" />
+                    {liked ? <i className="fa-solid fa-heart" /> : <i className="fa-regular fa-heart"></i>}
                 </span> : (
                     <>
                         <i className={`fa-solid fa-heart ${liked && "text-primary"} `} />
