@@ -3,7 +3,7 @@ import { signOut } from 'next-auth/react';
 
 const LoggedUserAction = ({ name, logout }) => {
     const handleLogout = () => {
-        signOut({ callbackUrl: "http://localhost:3000/login" })
+        signOut()
     }
     return (
         <div className='flex gap-4 text-white'>
