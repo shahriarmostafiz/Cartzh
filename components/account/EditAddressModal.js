@@ -2,8 +2,9 @@
 import React from 'react';
 import crossIcon from "@/public/close.svg"
 import Image from 'next/image';
+import { handleAddressEdit } from '@/action';
 
-const EditAddressModal = ({ userId, editInfo, editWhat, closeThis }) => {
+const EditAddressModal = ({ userId, editInfo, editWhat, closeThis, dictionary }) => {
     const handleEdit = async (event) => {
         event.preventDefault()
         const editProperTy = editWhat.toLowerCase().split(" ")[0]
@@ -27,6 +28,8 @@ const EditAddressModal = ({ userId, editInfo, editWhat, closeThis }) => {
 
         }
         console.log(addressInfo);
+        const res = await handleAddressEdit(userId, addressInfo)
+        console.log(res);
         // if (addressInfo?.shipping) {
         //     console.log("shipping was given");
         // } else {
@@ -38,12 +41,12 @@ const EditAddressModal = ({ userId, editInfo, editWhat, closeThis }) => {
             {/* Search Container */}
             <div className="relative w-1/4 mx-auto bg-white p-4 border border-slate-600/50 rounded-lg shadow-lg shadow-slate-400/10">
                 <div className=" border border-gray-200 p-4 rounded">
-                    <h3 className="text-lg font-medium capitalize mb-4">Edit {editWhat} </h3>
+                    <h3 className="text-lg font-medium capitalize mb-4">{dictionary?.edit} {dictionary[editWhat]} </h3>
                     <form className="space-y-4" onSubmit={handleEdit}>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <label htmlFor="lname" className="text-gray-600">
-                                    First Name <span className="text-primary">*</span>
+                                    {dictionary?.fName}
                                 </label>
                                 <input
 
@@ -59,7 +62,7 @@ const EditAddressModal = ({ userId, editInfo, editWhat, closeThis }) => {
                             </div>
                             <div>
                                 <label htmlFor="lname" className="text-gray-600">
-                                    Last Name <span className="text-primary">*</span>
+                                    {dictionary?.lName}
                                 </label>
                                 <input
                                     type="text"
@@ -76,16 +79,18 @@ const EditAddressModal = ({ userId, editInfo, editWhat, closeThis }) => {
 
                         <div>
                             <label htmlFor="region" className="text-gray-600">
-                                Country/Region
+                                {dictionary?.country}
+
                             </label>
                             <input type="text"
                                 defaultValue={
-                                    editInfo?.city ?? ""
+                                    editInfo?.region ?? ""
                                 }
                                 required name="region" id="region" className="input-box" />
                         </div>
                         <div>
                             <label htmlFor="address" className="text-gray-600">
+                                {dictionary?.streetAddress}
 
                             </label>
                             <input type="text"
@@ -96,7 +101,9 @@ const EditAddressModal = ({ userId, editInfo, editWhat, closeThis }) => {
                         </div>
                         <div>
                             <label htmlFor="city" className="text-gray-600">
-                                City
+
+                                {dictionary?.city}
+
                             </label>
                             <input type="text"
                                 defaultValue={
@@ -106,7 +113,9 @@ const EditAddressModal = ({ userId, editInfo, editWhat, closeThis }) => {
                         </div>
                         <div>
                             <label htmlFor="phone" className="text-gray-600">
-                                Phone number
+
+                                {dictionary?.phone}
+
                             </label>
                             <input type="text"
                                 defaultValue={
@@ -120,7 +129,7 @@ const EditAddressModal = ({ userId, editInfo, editWhat, closeThis }) => {
 
                             className="block w-full py-3 px-4 text-center text-white bg-primary border border-primary rounded-md hover:bg-transparent hover:text-primary transition font-medium"
                         >
-                            Update {editWhat}
+                            {dictionary?.update} {dictionary[editWhat]}
                         </button>
 
                     </form>

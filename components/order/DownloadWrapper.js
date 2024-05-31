@@ -4,11 +4,11 @@ import React from 'react';
 const PdfGenerator = dynamic(() => import('./PdfGen.js'), { ssr: false });
 
 
-const DownloadWrapper = ({ data }) => {
+const DownloadWrapper = ({ data, congrats, confirmLang }) => {
     return (
         <div className="flex justify-center items-center w-full min-w-full min-h-[70vh]">
             <div className="mx-auto w-fit py-8 space-y-4 px-10 border border-primary rounded">
-                <h1><b>Congratulations!!</b>. You order has been placed </h1>
+                <h1><b>{congrats}!!</b>. {confirmLang}</h1>
                 <PdfGenerator data={data} />
             </div>
         </div>

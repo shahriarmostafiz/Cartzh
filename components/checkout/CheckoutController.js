@@ -11,8 +11,10 @@ import { MyDocument } from '../order/MyDocument';
 
 
 
-const CheckoutController = ({ checkoutProducts, cartInfo, userInfo }) => {
+const CheckoutController = ({ checkoutProducts, cartInfo, userInfo, lang, dictionary }) => {
     const router = useRouter()
+    const [orderError, setOrderErr] = useState(null)
+
     // const [orderInfo, setOrderInfo] = useState({
 
     // })
@@ -25,10 +27,27 @@ const CheckoutController = ({ checkoutProducts, cartInfo, userInfo }) => {
     const handleForm = async (event) => {
         event.preventDefault()
         const formData = new FormData(event.currentTarget)
+        const agreeToTerms = event.target.aggreement.checked
+        if (!agreeToTerms) {
+            if (lang.includes("en")) {
+                setOrderErr("Please agree to terms and conditions")
+            } else {
+                setOrderErr("নিয়ম এবং শর্তাবলী সম্মত করুন")
+            }
 
+            return
+        }
+        if (checkoutProducts?.length < 1) {
+            if (lang.includes("en")) {
+                setOrderErr("No products added to cart")
+            } else {
+                setOrderErr("কোন পণ্য কার্টে যুক্ত করা হয় নি")
+
+            }
+            return
+        }
         const fname = formData.get("fname")
         const lname = formData.get("lname")
-        const company = formData.get("company")
         const region = formData.get("region")
         const address = formData.get("address")
         const city = formData.get("city")
@@ -57,7 +76,7 @@ const CheckoutController = ({ checkoutProducts, cartInfo, userInfo }) => {
             if (res) {
                 const pdf = await handlePdf(res)
                 if (pdf === "success") {
-                    router.push(`/order/${res?.id}`)
+                    router.push(`/${lang}/order/${res?.id}`)
                 }
                 else {
                     console.log(pdf);
@@ -68,6 +87,7 @@ const CheckoutController = ({ checkoutProducts, cartInfo, userInfo }) => {
             }
         } catch (error) {
             console.log(error);
+            setOrderErr(error.message)
         }
 
 
@@ -88,16 +108,20 @@ const CheckoutController = ({ checkoutProducts, cartInfo, userInfo }) => {
         <form
             onSubmit={handleForm}
             className="container grid grid-cols-12 items-start pb-16 pt-4 gap-6">
-            <CheckOutForm userInfo={userInfo} />
+            <CheckOutForm userInfo={userInfo} dictionary={dictionary} />
             <div className="col-span-4 border border-gray-200 p-4 rounded">
-                <CheckoutProducts products={checkoutProducts} tSum={tSum} cartInfo={cartInfo} />
+                <CheckoutProducts products={checkoutProducts} tSum={tSum} cartInfo={cartInfo} dictionary={dictionary} lang={lang} />
                 <button
                     type="submit"
 
                     className="block w-full py-3 px-4 text-center text-white bg-primary border border-primary rounded-md hover:bg-transparent hover:text-primary transition font-medium"
                 >
-                    Place order
+                    {dictionary?.placeOrder}
                 </button>
+                <div className="text-red-700 pt-4">
+                    {orderError ?? <p >{orderError}</p>}
+
+                </div>
             </div>
 
 

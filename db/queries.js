@@ -5,11 +5,25 @@ import { userModel } from "./models/users.model";
 import { orderModel } from "./models/order.model";
 import { cartModel } from "./models/cart.model";
 import { revalidatePath } from "next/cache";
+import mongoose from "mongoose";
 
 export async function getAllProducts() {
     await connectMongo()
     const products = await productModel.find().lean()
     return replaceIDinArray(products)
+}
+export async function getAllProductIds() {
+    await connectMongo()
+    const products = await productModel.find().select(
+        ["category"]).lean()
+    const allProducts = replaceIDinArray(products)
+
+    const categoryArray = allProducts.map(product => product.category)
+    let uniqueCategory = [...new Set(categoryArray)];
+    const idArray = allProducts.map(product => product.id)
+    // console.log(idArray);
+    console.log(uniqueCategory);
+    return { idArray, uniqueCategory }
 }
 
 export async function getProductsBySearchAndFilter(searchTerm, category, minPrice, maxPrice, size) {
@@ -29,7 +43,7 @@ export async function getProductsBySearchAndFilter(searchTerm, category, minPric
                 { brand: { $regex: searchReg } }
             ]
         }).select(
-            ["name", "gallery", "discountedPrice", "category", "price", "rating", "size", "reviews"]).lean()
+            ["name", "gallery", "discountedPrice", "category", "price", "rating", "size", "reviews", "stock"]).lean()
 
         // console.log(allproducts, "was fetched");
         productAmmoutData = [...allproducts]
@@ -82,7 +96,7 @@ export async function getProductsBySearchAndFilter(searchTerm, category, minPric
     }
     else {
         const allproducts = await productModel.find().select(
-            ["name", "gallery", "discountedPrice", "price", "rating", "category", "size", "reviews"]).lean()
+            ["name", "gallery", "discountedPrice", "price", "rating", "category", "size", "reviews", "stock"]).lean()
         productAmmoutData = [...allproducts]
         products = [...allproducts]
         // console.log();
@@ -242,7 +256,7 @@ export async function getAProduct(id) {
 export async function getNewArrivals() {
     await connectMongo()
     const products = await productModel.find().sort({ createdAt: 1 }).limit(4).select(
-        ["name", "gallery", "discountedPrice", "price", "rating", "reviews"]
+        ["name", "gallery", "discountedPrice", "price", "rating", "reviews", "stock"]
     ).lean()
     return replaceIDinArray(products)
 
@@ -251,7 +265,7 @@ export async function getTrendingProducts() {
     await connectMongo()
 
     const products = await productModel.find().sort({ updatedAt: -1 }).limit(4).select(
-        ["name", "gallery", "discountedPrice", "price", "rating", "reviews"]
+        ["name", "gallery", "discountedPrice", "price", "rating", "reviews", "stock"]
     ).lean()
     return replaceIDinArray(products)
 
@@ -290,7 +304,7 @@ export async function getProductsByCategory(name) {
     await connectMongo()
     const products = await productModel.find(
         { category: { $regex: new RegExp(name, "i") } }
-    ).select(["name", "gallery", "discountedPrice", "price", "rating", "reviews"]).lean()
+    ).select(["name", "gallery", "discountedPrice", "price", "rating", "reviews", "stock"]).lean()
     if (products.length) {
         return replaceIDinArray(products)
     } else {
@@ -390,7 +404,7 @@ export async function placeOrder(info) {
 
     } catch (error) {
         console.log(error.message);
-        return error.message
+        throw new Error(error)
     }
 }
 export async function updateCartStatus(userId, productIds) {
@@ -414,16 +428,17 @@ export async function updateCartStatus(userId, productIds) {
     }
 };
 
-export async function updateUser(userId, propertyName, info) {
+export async function updateUserAddress(userId, updates) {
     await connectMongo()
-    const updateInfo = {
-        [propertyName]: info
-    }
+    console.log("id", userId);
+    console.log("updates", updates);
+    // const updateInfo = {
+    //     [propertyName]: info
+    // }
     try {
-        const res = await userModel.findByIdAndUpdate(userId, {
-            $set: updateInfo
-        }, { new: true })
+        const res = await userModel.findByIdAndUpdate(userId, updates, { new: true })
         if (res) {
+            console.log(res, "after update in query");
             return res
         }
 
@@ -449,5 +464,36 @@ export async function getOrder(orderId) {
     } catch (error) {
         console.log("gettingOrder issue", error.message);
         return null
+    }
+}
+
+export async function deleteCartItems(productId, userId,) {
+
+
+    try {
+        await connectMongo()
+        const filter = {
+            productId: productId,
+            userId: userId,
+            status: "pending"
+        }
+        const res = await cartModel.deleteMany(filter)
+        if (res) {
+            return "deleted"
+        }
+    } catch (error) {
+        console.log("error in deletation", error.message);
+        throw new Error(error)
+    }
+}
+export async function getWishListProducts(productIdArray) {
+    const objectIds = productIdArray.map(id => new mongoose.Types.ObjectId(id))
+    try {
+        await connectMongo()
+        const res = await productModel.find({ _id: { $in: objectIds } }).lean()
+        return replaceIDinArray(res)
+    } catch (error) {
+        console.log(error)
+        return "failed";
     }
 }

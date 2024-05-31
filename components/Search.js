@@ -3,7 +3,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-const Search = ({ searchTerm }) => {
+const Search = ({ searchTerm, dictionaryValue }) => {
     const { replace } = useRouter()
     const pathName = usePathname()
     const searchParams = useSearchParams()
@@ -38,7 +38,7 @@ const Search = ({ searchTerm }) => {
             <button
                 onClick={doSearch}
                 className="bg-primary border border-primary text-white px-8 rounded-r-md hover:bg-transparent hover:text-primary transition hidden md:flex justify-center items-center">
-                Search
+                {dictionaryValue}
             </button>
         </div>
     );

@@ -3,7 +3,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { useEffect, useState } from 'react';
 
-const FilterbyCategory = ({ products }) => {
+const FilterbyCategory = ({ products, lang, dictionary }) => {
     const [query, setQuery] = useState([])
     const { replace } = useRouter()
     const pathName = usePathname()
@@ -44,8 +44,8 @@ const FilterbyCategory = ({ products }) => {
 
     return (
         <div>
-            <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">
-                Categories
+            <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium py-4">
+                {dictionary?.categories}
             </h3>
             <div className="space-y-2">
                 <div className="flex items-center">
@@ -60,7 +60,7 @@ const FilterbyCategory = ({ products }) => {
                         className="text-primary focus:ring-0 rounded-sm cursor-pointer"
                     />
                     <label htmlFor="cat-1" className="text-gray-600 ml-3 cusror-pointer">
-                        Bedroom
+                        {dictionary?.bedroom}
                     </label>
                     <div className="ml-auto text-gray-600 text-sm">({getCategoryValue(products, "bedroom")})</div>
                 </div>
@@ -74,7 +74,8 @@ const FilterbyCategory = ({ products }) => {
                         className="text-primary focus:ring-0 rounded-sm cursor-pointer"
                     />
                     <label htmlFor="cat-2" className="text-gray-600 ml-3 cusror-pointer">
-                        Sofa
+                        {dictionary?.sofa}
+
                     </label>
                     <div className="ml-auto text-gray-600 text-sm">({getCategoryValue(products, "sofa")})</div>
                 </div>
@@ -88,7 +89,8 @@ const FilterbyCategory = ({ products }) => {
                         className="text-primary focus:ring-0 rounded-sm cursor-pointer"
                     />
                     <label htmlFor="cat-3" className="text-gray-600 ml-3 cusror-pointer">
-                        OutDoor
+                        {dictionary?.outdoor}
+
                     </label>
                     <div className="ml-auto text-gray-600 text-sm">({getCategoryValue(products, "outdoor")})</div>
                 </div>
@@ -102,7 +104,8 @@ const FilterbyCategory = ({ products }) => {
                         className="text-primary focus:ring-0 rounded-sm cursor-pointer"
                     />
                     <label htmlFor="cat-3" className="text-gray-600 ml-3 cusror-pointer">
-                        Kitchen
+                        {dictionary?.kitchen}
+
                     </label>
                     <div className="ml-auto text-gray-600 text-sm">({getCategoryValue(products, "kitchen")})</div>
                 </div>
@@ -116,7 +119,8 @@ const FilterbyCategory = ({ products }) => {
                         className="text-primary focus:ring-0 rounded-sm cursor-pointer"
                     />
                     <label htmlFor="cat-4" className="text-gray-600 ml-3 cusror-pointer">
-                        Mattress
+                        {dictionary?.mattress}
+
                     </label>
                     <div className="ml-auto text-gray-600 text-sm">({getCategoryValue(products, "mattress")})</div>
                 </div>
@@ -130,7 +134,8 @@ const FilterbyCategory = ({ products }) => {
                         className="text-primary focus:ring-0 rounded-sm cursor-pointer"
                     />
                     <label htmlFor="cat-4" className="text-gray-600 ml-3 cusror-pointer">
-                        Living Room
+                        {dictionary?.living}
+
                     </label>
                     <div className="ml-auto text-gray-600 text-sm">({getCategoryValue(products, "living-room")})</div>
                 </div>

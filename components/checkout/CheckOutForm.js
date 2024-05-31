@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CheckOutForm = ({ userInfo }) => {
+const CheckOutForm = ({ userInfo, dictionary }) => {
 
 
     return (
@@ -10,7 +10,7 @@ const CheckOutForm = ({ userInfo }) => {
                 <div className="grid grid-cols-2 gap-4">
                     <div>
                         <label htmlFor="lname" className="text-gray-600">
-                            First Name <span className="text-primary">*</span>
+                            {dictionary?.fName} <span className="text-primary">*</span>
                         </label>
                         <input
 
@@ -19,11 +19,14 @@ const CheckOutForm = ({ userInfo }) => {
                             name="fname"
                             id="fname"
                             className="input-box"
+                            defaultValue={
+                                userInfo?.shippingAddress?.name?.split(" ")[0] ?? ""
+                            }
                         />
                     </div>
                     <div>
                         <label htmlFor="lname" className="text-gray-600">
-                            Last Name <span className="text-primary">*</span>
+                            {dictionary?.lName} <span className="text-primary">*</span>
                         </label>
                         <input
                             type="text"
@@ -31,49 +34,60 @@ const CheckOutForm = ({ userInfo }) => {
                             name="lname"
                             id="lname"
                             className="input-box"
+                            defaultValue={
+                                userInfo?.shippingAddress?.name?.split(" ")[1] ?? ""
+                            }
                         />
                     </div>
                 </div>
-                <div>
-                    <label htmlFor="company" className="text-gray-600">
-                        Company
-                    </label>
-                    <input type="text"
-                        name="company" id="company" className="input-box" />
-                </div>
+
                 <div>
                     <label htmlFor="region" className="text-gray-600">
-                        Country/Region
+                        {dictionary?.country} <span className="text-primary">*</span>
                     </label>
                     <input type="text"
+                        defaultValue={
+                            userInfo?.shippingAddress?.region ?? ""
+                        }
                         required name="region" id="region" className="input-box" />
                 </div>
                 <div>
                     <label htmlFor="address" className="text-gray-600">
-                        Street address
+                        {dictionary?.streetAddress} <span className="text-primary">*</span>
                     </label>
                     <input type="text"
+                        defaultValue={
+                            userInfo?.shippingAddress?.address ?? ""
+                        }
                         required name="address" id="address" className="input-box" />
                 </div>
                 <div>
                     <label htmlFor="city" className="text-gray-600">
-                        City
+                        {dictionary?.city} <span className="text-primary">*</span>
                     </label>
                     <input type="text"
+                        defaultValue={
+                            userInfo?.shippingAddress?.city ?? ""
+                        }
                         required name="city" id="city" className="input-box" />
                 </div>
                 <div>
                     <label htmlFor="phone" className="text-gray-600">
-                        Phone number
+                        {dictionary?.phone} <span className="text-primary">*</span>
                     </label>
                     <input type="text"
+                        defaultValue={
+                            userInfo?.shippingAddress?.phone ?? userInfo?.phone ?? ""
+                        }
                         required name="phone" id="phone" className="input-box" />
                 </div>
                 <div>
                     <label htmlFor="email" className="text-gray-600">
-                        Email address
+                        {dictionary?.emailAddress} <span className="text-primary">*</span>
                     </label>
-                    <input type="email" name="email" id="email" className="input-box" defaultValue={userInfo?.email} />
+                    <input
+
+                        type="email" name="email" id="email" className="input-box" defaultValue={userInfo?.email} />
                 </div>
 
             </div>
@@ -83,3 +97,11 @@ const CheckOutForm = ({ userInfo }) => {
 };
 
 export default CheckOutForm;
+
+// <div>
+//                  <label htmlFor="company" className="text-gray-600">
+//                    {dictionary?.company}   <span className="text-primary">*</span>
+//             </label>
+//           <input type="text"
+//             name="company" id="company" className="input-box" />
+//   </div >

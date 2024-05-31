@@ -1,33 +1,33 @@
 export function CapitalizeFirstWord(word) {
-    return word.charAt(0).toUpperCase() + word.slice(1)
+  return word.charAt(0).toUpperCase() + word.slice(1)
 }
 export function getCategoryValue(array = [], category) {
-    if (array.length) {
-        const categoryArray = array.filter(item => item.category.toLowerCase() === category)
-        return categoryArray.length
-    }
-    return 0
+  if (array.length) {
+    const categoryArray = array.filter(item => item.category.toLowerCase() === category)
+    return categoryArray.length
+  }
+  return 0
 }
 export function countQuantity(array, id) {
-    return array.reduce((count, obj) => {
-        return obj.id === id ? count + 1 : count;
-    }, 0);
+  return array.reduce((count, obj) => {
+    return obj.id === id ? count + 1 : count;
+  }, 0);
 }
 
 export function getSum(array) {
-    return array.reduce((count, product) => {
-        return product.discountedPrice + count
-    }, 0)
+  return array.reduce((count, product) => {
+    return product.discountedPrice + count
+  }, 0)
 }
 export function getQuantity(cartInfo, id) {
-    // console.log(cartInfo, "was given");
-    // console.log(id, "id was given");
-    const value = cartInfo?.filter(item => item.productId === id)
-    return value.length
+  // console.log(cartInfo, "was given");
+  // console.log(id, "id was given");
+  const value = cartInfo?.filter(item => item.productId === id)
+  return value.length
 }
 
 export const generateEmailHtml = (orderData) => {
-    return `
+  return `
     <html>
       <body style="font-family: Arial, sans-serif; line-height: 1.6;">
         <h2 style="color:white; font-size: 30px; background-color: #de1846; text-align: center; padding: 10px; border-radius: 4px; ">Order Confirmation</h2>
@@ -63,3 +63,8 @@ export const generateEmailHtml = (orderData) => {
     </html>
   `;
 };
+
+
+// export const getCategoryDictionaryName = (dictionary, categoryName) => {
+// return dictionary[categoryName]
+// }

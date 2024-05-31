@@ -11,35 +11,40 @@ import mattress from "@/public/icons/bed-2.svg"
 import kitchen from "@/public/icons/kitchenIcon.svg"
 import { auth } from '@/auth';
 import LoggedUserAction from './LoggedUserAction';
+import { getDictionary } from '@/app/[language]/dictionary';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const categoryData = [
     {
         icon: bed,
-        category: "Bedroom"
+        category: "bedroom"
     },
     {
         icon: mattress,
-        category: "Mattress"
+        category: "mattress"
     },
     {
         icon: cafe,
-        category: "Outdoor"
+        category: "outdoor"
     },
     {
         icon: sofa,
-        category: "Sofa"
+        category: "sofa"
     },
     {
         icon: terrace,
-        category: "Living-Room"
+        category: "living"
     },
     {
         icon: kitchen,
-        category: "Kitchen"
+        category: "kitchen"
     },
 ]
-const NavBar = async () => {
+
+const NavBar = async ({ lang }) => {
     const userInfo = await auth()
+    const dictionary = await getDictionary(lang)
+
     return (
         <nav className="bg-gray-800">
             <div className="container flex">
@@ -47,7 +52,7 @@ const NavBar = async () => {
                     <span className="text-white">
                         <i className="fa-solid fa-bars" />
                     </span>
-                    <span className="capitalize ml-2 text-white hidden">All Categories</span>
+                    <span className="capitalize ml-2 text-white hidden">{dictionary?.allCategories}</span>
                     {/* dropdown */}
                     <div
                         className="absolute z-30  left-0 top-full bg-white shadow-md py-3 divide-y divide-gray-300 divide-dashed opacity-0 group-hover:opacity-100 transition duration-300 invisible group-hover:visible w-[600px]"
@@ -55,7 +60,7 @@ const NavBar = async () => {
                     >{
                             categoryData?.map(item => <Link
                                 key={item.category}
-                                href={`/categories/${item?.category.toLowerCase()}`}
+                                href={`/${lang}/categories/${item?.category.toLowerCase()}`}
                                 className="flex items-center px-6 py-3 hover:bg-gray-100 transition"
                             >
                                 <Image
@@ -63,7 +68,9 @@ const NavBar = async () => {
                                     alt={item?.category}
                                     className="w-5 h-5 object-contain"
                                 />
-                                <span className="ml-6 text-gray-600 text-sm">{item?.category}</span>
+                                <span className="ml-6 text-gray-600 text-sm">{
+                                    dictionary[item?.category]
+                                }</span>
                             </Link>)
                         }
 
@@ -76,31 +83,35 @@ const NavBar = async () => {
                             href="/"
                             className="text-gray-200 hover:text-white transition"
                         >
-                            Home
+                            {dictionary?.home}
                         </Link>
                         <Link
-                            href="/shop"
+                            href={`/${lang}/shop`}
                             className="text-gray-200 hover:text-white transition"
                         >
-                            Shop
+                            {dictionary?.shop}
                         </Link>
                         <Link href="#" className="text-gray-200 hover:text-white transition">
-                            About us
+                            {dictionary?.aboutUs}
                         </Link>
                         <Link href="#" className="text-gray-200 hover:text-white transition">
-                            Contact us
+                            {dictionary?.contactUs}
                         </Link>
+                        <LanguageSwitcher />
                     </div>
                     {
                         userInfo?.user ? (<>
-                            <LoggedUserAction name={userInfo?.user?.name} />
+                            <LoggedUserAction name={userInfo?.user?.name}
+                                logout={dictionary?.logout}
+                            />
                         </>) : <Link
                             href="/login"
                             className="text-gray-200 hover:text-white transition"
                         >
-                            Login
+                            {dictionary?.login}
                         </Link>
                     }
+
                 </div>
             </div>
         </nav>

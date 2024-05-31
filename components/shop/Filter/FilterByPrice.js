@@ -2,7 +2,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { useEffect, useState } from 'react';
 
-const FilterByPrice = () => {
+const FilterByPrice = ({ lang, priceLang }) => {
 
     const [query, setQuery] = useState({
         min: "",
@@ -60,7 +60,7 @@ const FilterByPrice = () => {
     return (
         <div className="pt-4">
             <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">
-                Price
+                {priceLang}
             </h3>
             <div className="mt-4 flex items-center">
                 <input

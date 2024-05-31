@@ -10,40 +10,40 @@ import Link from "next/link"
 const categoryData = [
     {
         image: category1,
-        category: "Bedroom"
+        category: "bedroom"
     },
     {
         image: category2,
-        category: "Mattress"
+        category: "mattress"
     },
     {
         image: category3,
-        category: "Outdoor"
+        category: "outdoor"
     },
     {
         image: category4,
-        category: "Sofa"
+        category: "sofa"
     },
     {
         image: category5,
-        category: "Living-Room"
+        category: "living"
     },
     {
         image: category6,
-        category: "Kitchen"
+        category: "kitchen"
     },
 ]
 
-const Categories = () => {
+const Categories = ({ lang, langCategories, shopbyCategory }) => {
     return (
         <div className="container py-16">
             <h2 className="text-2xl font-medium text-gray-800 uppercase mb-6">
-                shop by category
+                {shopbyCategory}
             </h2>
             <div className="grid grid-cols-3 gap-3">
                 {
                     categoryData?.map(category => <Link
-                        href={`/categories/${category.category.toLowerCase()}`}
+                        href={`${lang}/categories/${category.category.toLowerCase()}`}
                         className="relative rounded-sm overflow-hidden group" key={category.category}>
                         <Image
                             src={category.image}
@@ -55,78 +55,14 @@ const Categories = () => {
                             className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition"
                         >
                             {
-                                category.category
+                                langCategories[category.category]
                             }
                         </span>
                     </Link
 
                     >)
                 }
-                {/* <div className="relative rounded-sm overflow-hidden group">
-                    <Image
-                        src={category2}
-                        alt="category 1"
-                        className="w-full"
-                    />
-                    <Link
-                        href="#"
-                        className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition"
-                    >
-                        Mattress
-                    </Link>
-                </div>
-                <div className="relative rounded-sm overflow-hidden group">
-                    <Image
-                        src={category3}
-                        alt="category 1"
-                        className="w-full"
-                    />
-                    <Link
-                        href="#"
-                        className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition"
-                    >
-                        Outdoor
-                    </Link>
-                </div>
-                <div className="relative rounded-sm overflow-hidden group">
-                    <Image
-                        src={category4}
-                        alt="category 1"
-                        className="w-full"
-                    />
-                    <Link
-                        href="#"
-                        className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition"
-                    >
-                        Sofa
-                    </Link>
-                </div>
-                <div className="relative rounded-sm overflow-hidden group">
-                    <Image
-                        src={category5}
-                        alt="category 1"
-                        className="w-full"
-                    />
-                    <Link
-                        href="#"
-                        className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition"
-                    >
-                        Living Room
-                    </Link>
-                </div>
-                <div className="relative rounded-sm overflow-hidden group">
-                    <Image
-                        src={category6}
-                        alt="category 1"
-                        className="w-full"
-                    />
-                    <Link
-                        href="#"
-                        className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition"
-                    >
-                        Kitchen
-                    </Link>
-                </div> */}
+
             </div>
         </div>
 

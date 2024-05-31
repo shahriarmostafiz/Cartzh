@@ -1,7 +1,7 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
-const FilterBySize = () => {
+const FilterBySize = ({ lang, sizes, sizeLang }) => {
     // const [query, setQuery] = useState([])
     const { replace } = useRouter()
     const pathName = usePathname()
@@ -82,7 +82,7 @@ const FilterBySize = () => {
     // }, [query])
     return (
         <div className="pt-4">
-            <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">Size</h3>
+            <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">{sizeLang}</h3>
             <div className="flex items-center gap-2">
                 {['xs', 's', 'm', 'l', 'xl'].map((size) => (
                     <div className="size-selector" key={size}>
@@ -96,9 +96,9 @@ const FilterBySize = () => {
                         />
                         <label
                             htmlFor={size}
-                            className={`text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600 ${query === size ? 'border-blue-500' : ''}`}
+                            className={`text-xs border uppercase border-gray-200 rounded-sm h-6 w-6  flex items-center justify-center cursor-pointer shadow-sm text-gray-600 ${query === size ? 'border-blue-500' : ''}`}
                         >
-                            {size.toUpperCase()}
+                            {size}
                         </label>
                     </div>
                 ))}

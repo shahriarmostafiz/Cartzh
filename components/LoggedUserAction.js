@@ -1,7 +1,7 @@
 "use client"
 import { signOut } from 'next-auth/react';
 
-const LoggedUserAction = ({ name }) => {
+const LoggedUserAction = ({ name, logout }) => {
     const handleLogout = () => {
         signOut({ callbackUrl: "http://localhost:3000/login" })
     }
@@ -13,7 +13,7 @@ const LoggedUserAction = ({ name }) => {
 
             <span
                 onClick={handleLogout}
-                className="  text-red-600 cursor-pointer  hover:text-white">Logout </span>
+                className="  text-red-600 cursor-pointer  hover:text-white">{logout} </span>
         </div >
     );
 };

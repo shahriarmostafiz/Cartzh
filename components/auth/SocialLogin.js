@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { signIn } from "next-auth/react";
 
 
-const SocialLogin = ({ page }) => {
+const SocialLogin = ({ page, lang, dictionary }) => {
     const handleGoogleLogin = (event) => {
         console.log("pressed");
         signIn("google", { callbackUrl: "http://localhost:3000/" })
@@ -17,7 +17,7 @@ const SocialLogin = ({ page }) => {
         <>
             <div className="mt-6 flex justify-center relative">
                 <div className="text-gray-600 uppercase px-3 bg-white z-10 relative">
-                    Or login with
+                    {dictionary?.orLogin}
                 </div>
                 <div className="absolute left-0 top-3 w-full border-b-2 border-gray-200" />
             </div>
@@ -26,13 +26,13 @@ const SocialLogin = ({ page }) => {
                     onClick={handeFacebookLogin}
                     className="w-1/2 py-2 text-center text-white bg-blue-800 rounded uppercase font-roboto font-medium text-sm hover:bg-blue-700"
                 >
-                    facebook
+                    {dictionary?.facebook}
                 </button>
                 <button
                     onClick={(e) => handleGoogleLogin(e)}
                     className="w-1/2 py-2 text-center text-white bg-red-600 rounded uppercase font-roboto font-medium text-sm hover:bg-red-500"
                 >
-                    google
+                    {dictionary?.google}
                 </button>
             </div>
             {/* ./login with */}
@@ -40,10 +40,10 @@ const SocialLogin = ({ page }) => {
                 {
                     page === "login" ? "Don't have account?  " : "Already have account?"
                 }
-                {page === "login" ? <Link href="/register" className="text-primary">
-                    Register now
-                </Link> : <Link href="/login"
-                    className="text-primary">Login now</Link>}
+                {page === "login" ? <Link href={`${lang}/register`} className="text-primary">
+                    {dictionary?.registerNow}
+                </Link> : <Link href={`${lang}/login`}
+                    className="text-primary">{dictionary?.loginNow}</Link>}
             </p>
         </>
 

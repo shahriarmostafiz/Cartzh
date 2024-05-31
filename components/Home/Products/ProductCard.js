@@ -1,10 +1,11 @@
 import { auth } from '@/auth';
+import WishListAction from '@/components/Details/WishListAction';
 import AddToCart from '@/components/shared/AddToCart';
 import { getUserInfo } from '@/db/queries';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const ProductCard = async ({ product }) => {
+const ProductCard = async ({ lang, product, dictionary }) => {
     const session = await auth()
     const ratingArray = Array(parseInt(product?.rating)).fill("val")
     let userInfo = null
@@ -27,23 +28,26 @@ const ProductCard = async ({ product }) => {
               justify-center gap-2 opacity-0 group-hover:opacity-100 transition"
                 >
                     <Link
-                        href={`/detail/${product?.id}`}
+                        href={`/${lang}/detail/${product?.id}`}
                         className="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
                         title="view product"
                     >
                         <i className="fa-solid fa-magnifying-glass" />
                     </Link>
-                    <Link
+
+                    <WishListAction dictionary={dictionary} productId={product?.id} userId={userInfo?.id} wishList={userInfo?.wishList} iconButton={true} />
+
+                    {/* <Link
                         href="#"
                         className="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
                         title="add to wishlist"
                     >
                         <i className="fa-solid fa-heart" />
-                    </Link>
+                    </Link> */}
                 </div>
             </div>
             <div className="pt-4 pb-3 px-4 flex flex-col flex-1">
-                <Link href={`/detail/${product?.id}`} >
+                <Link href={`/${lang}/detail/${product?.id}`} >
                     <h4 className="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition flex-1">
                         {product?.name}
                     </h4>
@@ -74,11 +78,15 @@ const ProductCard = async ({ product }) => {
                 </div>
             </div>
             {
-                session?.user && userInfo?.id ? <AddToCart productId={product?.id} userId={userInfo?.id} quantity={1} /> : <Link
+                session?.user && userInfo?.id ? (
+                    product?.stock > 1 ?
+                        <AddToCart dictionary={dictionary} productId={product?.id} userId={userInfo?.id} quantity={1} />
+                        : <WishListAction dictionary={dictionary} productId={product?.id} userId={userInfo?.id} wishList={userInfo?.wishList} />
+                ) : <Link
                     href={`/detail/${product?.id}`}
                     className="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition"
                 >
-                    View Details
+                    {dictionary?.viewDetails}
                 </Link>
             }
         </div>
@@ -87,3 +95,5 @@ const ProductCard = async ({ product }) => {
 };
 
 export default ProductCard;
+
+// serId, wishList, productId 

@@ -1,10 +1,10 @@
 "use client"
 import { addToCart } from '@/action';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import { useState } from 'react';
 
-const AddToCart = ({ quantity, userId, orderError, page, productId }) => {
-
+const AddToCart = ({ quantity, userId, orderError, page, productId, lang, dictionary }) => {
+    const [added, setAdded] = useState(false)
     const router = useRouter()
     const handleCart = async () => {
         if (!userId) {
@@ -18,7 +18,10 @@ const AddToCart = ({ quantity, userId, orderError, page, productId }) => {
         }
         console.log(cartInfo);
         const res = await addToCart(cartInfo)
-        console.log(res);
+        console.log(res)
+        if (res) {
+            setAdded(true)
+        }
 
     }
     return (
@@ -31,7 +34,9 @@ const AddToCart = ({ quantity, userId, orderError, page, productId }) => {
             {
                 page && <i className="fa-solid fa-bag-shopping" />
             }
-            Add to cart
+            {
+                added ? dictionary?.addedtoCart : dictionary?.addtoCart
+            }
         </button >
     );
 };

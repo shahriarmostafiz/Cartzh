@@ -1,10 +1,15 @@
 import React from 'react';
+import filterIcon from "@/public/icons/filter.png"
+import Image from 'next/image';
 
-const ToggleDrawer = ({ toggle }) => {
+const ToggleDrawer = ({ toggle, filter }) => {
     return (
-        <div className="text-center  md:hidden">
-            <button onClick={toggle}>
-                Show
+        <div className="text-center col-span-full  md:hidden">
+            <button
+                className={"flex justify-center items-center gap-4 px-4 py-1 border hover:border-primary rounded bg-transparent  "}
+                onClick={toggle}>
+                <Image src={filterIcon} alt="filter" height={24} width={24} />
+                <span>{filter}</span>
             </button>
             {/* <button
                 onClick={() => toggle()}

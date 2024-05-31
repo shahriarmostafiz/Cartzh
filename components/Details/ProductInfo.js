@@ -4,8 +4,10 @@ import Link from 'next/link';
 import { CapitalizeFirstWord } from '@/utils/infoUtils';
 import { auth } from '@/auth';
 import { getUserInfo } from '@/db/queries';
+import SocialShare from './SocialShare';
+import { getDictionary } from '@/app/[language]/dictionary';
 
-const ProductInfo = async ({ product }) => {
+const ProductInfo = async ({ product, lang }) => {
 
     const session = await auth()
     let userInfo = null;
@@ -13,6 +15,8 @@ const ProductInfo = async ({ product }) => {
         userInfo = await getUserInfo(session?.user?.email)
     }
     const ratingArray = Array(product?.rating).fill("val")
+
+    const dictionary = await getDictionary(lang)
     return (
         <div>
             <h2 className="text-3xl font-medium uppercase mb-2">{product?.name}</h2>
@@ -23,41 +27,30 @@ const ProductInfo = async ({ product }) => {
                             <i className="fa-solid fa-star" />
                         </span>)
                     }
-                    {/* <span>
-                        <i className="fa-solid fa-star" />
-                    </span>
-                    <span>
-                        <i className="fa-solid fa-star" />
-                    </span>
-                    <span>
-                        <i className="fa-solid fa-star" />
-                    </span>
-                    <span>
-                        <i className="fa-solid fa-star" />
-                    </span> */}
+
                 </div>
-                <div className="text-xs text-gray-500 ml-3">({product?.reviews} Reviews)</div>
+                <div className="text-xs text-gray-500 ml-3">({product?.reviews} {dictionary?.Reviews})</div>
             </div>
             <div className="space-y-2">
                 <p className="text-gray-800 font-semibold space-x-2">
-                    <span>Availability: </span>
+                    <span>{dictionary?.availability}: </span>
                     {
                         product?.stock > 0 ?
-                            <span className="text-green-600"> In Stock </span> :
-                            <span className="text-Red-600"> Out of Stock </span>
+                            <span className="text-green-600"> {dictionary?.inStock} </span> :
+                            <span className="text-Red-600"> {dictionary?.outStock} </span>
 
                     }
                 </p>
                 <p className="space-x-2">
-                    <span className="text-gray-800 font-semibold">Brand: </span>
+                    <span className="text-gray-800 font-semibold">{dictionary?.brand}: </span>
                     <span className="text-gray-600">{product?.brand}</span>
                 </p>
                 <p className="space-x-2">
-                    <span className="text-gray-800 font-semibold">Category: </span>
+                    <span className="text-gray-800 font-semibold">{dictionary?.category}: </span>
                     <Link href={`/categories/${product?.category}`} className="text-gray-600 hover:text-primary">{CapitalizeFirstWord(product?.category)}</Link>
                 </p>
                 <p className="space-x-2">
-                    <span className="text-gray-800 font-semibold">SKU: </span>
+                    <span className="text-gray-800 font-semibold">{dictionary?.SKU}: </span>
                     <span className="text-gray-600">{product?.sku}</span>
                 </p>
             </div>
@@ -68,27 +61,9 @@ const ProductInfo = async ({ product }) => {
             <p className="mt-4 text-gray-600">
                 {product?.description}
             </p>
-            <ProductAction product={product} userId={userInfo?.id} wishList={userInfo?.wishList} />
-            <div className="flex gap-3 mt-4">
-                <a
-                    href="#"
-                    className="text-gray-400 hover:text-gray-500 h-8 w-8 rounded-full border border-gray-300 flex items-center justify-center"
-                >
-                    <i className="fa-brands fa-facebook-f" />
-                </a>
-                <a
-                    href="#"
-                    className="text-gray-400 hover:text-gray-500 h-8 w-8 rounded-full border border-gray-300 flex items-center justify-center"
-                >
-                    <i className="fa-brands fa-twitter" />
-                </a>
-                <a
-                    href="#"
-                    className="text-gray-400 hover:text-gray-500 h-8 w-8 rounded-full border border-gray-300 flex items-center justify-center"
-                >
-                    <i className="fa-brands fa-instagram" />
-                </a>
-            </div>
+            <ProductAction product={product} userId={userInfo?.id} wishList={userInfo?.wishList} lang={lang} dictionary={dictionary} />
+            <h1 className="my-4 text-gray-600">{dictionary?.shareWith} </h1>
+            <SocialShare name={product?.name} />
         </div>
 
     );

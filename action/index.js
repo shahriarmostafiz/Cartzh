@@ -3,12 +3,13 @@ import { signIn } from "@/auth"
 import connectMongo from "@/db/connectDb"
 import { revalidatePath } from "next/cache"
 import bcrypt from "bcryptjs"
-import { createCart, createUser, getUserInfo, placeOrder, updateUser, updateWishList } from "@/db/queries"
+import { createCart, createUser, deleteCartItems, getUserInfo, placeOrder, updateUserAddress, updateWishList } from "@/db/queries"
 import nodemailer from "nodemailer"
 import { generateEmailHtml } from "@/utils/infoUtils"
 import { MyDocument } from "@/components/order/MyDocument"
 import { Buffer } from "buffer"
 import { pdf } from "@react-pdf/renderer"
+import { redirect } from "next/navigation"
 
 
 
@@ -22,6 +23,8 @@ export const updateCart = async () => {
         throw new Error("error in app")
     }
 }
+
+
 export async function login(info) {
     try {
         const res = await signIn("credentials", {
@@ -29,8 +32,12 @@ export async function login(info) {
             password: info.password,
             redirect: false
         })
+
+        console.log(res, "after login ");
+        revalidatePath("/")
         return res
     } catch (error) {
+        console.log(error);
         throw new Error(error)
     }
 }
@@ -95,24 +102,66 @@ export async function handleWish({ productId, userId }) {
 
 export async function handleOrder(orderInfo) {
     console.log(orderInfo);
-    const res = await placeOrder(orderInfo)
-    console.log(res, "in order");
-    revalidatePath("/")
-    return res
+    try {
+        const res = await placeOrder(orderInfo)
+        console.log(res, "in order");
+        revalidatePath("/")
+        return res
+    } catch (error) {
+        throw new Error(error)
+    }
 }
 
 export async function handleAddressEdit(userId, info) {
     await connectMongo()
     console.log(userId);
     console.log(info)
+
+    const updates = {}
     if (info?.billing) {
-        const res = await updateUser(userId, "billingAddress", info?.billing)
+        updates.billingAddress = info?.billing
+    } else if (info?.shipping) {
+        updates.shippingAddress = info?.shipping
+    }
+
+
+    // const updates = {
+    //     billingAddress: info?.billing ?? {},
+    //     shippingAddress: info?.shipping 
+    // }
+    try {
+
+        const res = await updateUserAddress(userId, updates)
         // const res = await userModel.findByIdAndUpdate(userId)
         console.log(res);
+        revalidatePath("/")
+        return "successs"
     }
-    else {
-        const res = await updateUser(userId, "billingAddress", info?.billing)
-        console.log(res);
+    catch (error) {
+        return "error in update "
+    }
+}
+export async function handlePersonalInfo(userId, info) {
+    await connectMongo()
+    // console.log(userId);
+    // console.log(info)
+
+    const updates = {
+        name: info?.name,
+        email: info?.email,
+        phone: info?.phone
+    }
+    try {
+
+        const res = await updateUserAddress(userId, updates)
+        // const res = await userModel.findByIdAndUpdate(userId)
+        console.log(res, "in index ");
+        revalidatePath("/")
+        return "successs"
+    }
+    catch (error) {
+        console.log(error);
+        return "error in update "
     }
 }
 
@@ -150,7 +199,7 @@ export const sendEmailWithAttachment = async (pdfBuffer, orderData) => {
         return "success"
     } catch (error) {
         console.error('Error sending email: ', error);
-        return error.message
+        throw new Error(error)
     }
 };
 
@@ -170,7 +219,7 @@ export async function handlePdf(res) {
 
     } catch (error) {
         console.log(error);
-        return "error"
+        throw new Error(error)
     }
     // if (email.message === 'Email sent successfully') {
     //     return "sucess"
@@ -181,6 +230,17 @@ export async function handlePdf(res) {
     //     console.log('Failed to send email: ' + email.message);
     //     return "failed to send pdf"
     // }
+}
+export async function handleDeleteFromCart(productId, userId) {
+    console.log(productId);
+    console.log(userId);
+    try {
+        const res = await deleteCartItems(productId, userId)
+        revalidatePath("/")
+        return res
+    } catch (error) {
+        throw new Error
+    }
 }
 
 

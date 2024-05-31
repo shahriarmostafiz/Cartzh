@@ -1,8 +1,10 @@
 "use client"
 import { registerUser } from '@/action';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-const RegisterForm = () => {
+
+const RegisterForm = ({ lang, dictionary }) => {
     const [regErr, setRegErr] = useState(null)
     const router = useRouter()
     // const { replace } = useRouter()
@@ -37,7 +39,7 @@ const RegisterForm = () => {
                 return
             }
             else {
-                router.push("/login")
+                router.push(`/${lang}/login`)
             }
 
         } catch (error) {
@@ -49,7 +51,7 @@ const RegisterForm = () => {
             <div className="space-y-2">
                 <div>
                     <label htmlFor="name" className="text-gray-600 mb-2 block">
-                        Full Name
+                        {dictionary?.fullName}
                     </label>
                     <input
                         type="text"
@@ -61,7 +63,7 @@ const RegisterForm = () => {
                 </div>
                 <div>
                     <label htmlFor="email" className="text-gray-600 mb-2 block">
-                        Email address
+                        {dictionary?.emailAddress}
                     </label>
                     <input
                         type="email"
@@ -73,7 +75,7 @@ const RegisterForm = () => {
                 </div>
                 <div>
                     <label htmlFor="password" className="text-gray-600 mb-2 block">
-                        Password
+                        {dictionary?.password}
                     </label>
                     <input
                         type="password"
@@ -85,7 +87,7 @@ const RegisterForm = () => {
                 </div>
                 <div>
                     <label htmlFor="confirm" className="text-gray-600 mb-2 block">
-                        Confirm password
+                        {dictionary?.confirmPassword}
                     </label>
                     <input
                         type="password"
@@ -108,10 +110,11 @@ const RegisterForm = () => {
                         htmlFor="aggrement"
                         className="text-gray-600 ml-3 cursor-pointer"
                     >
-                        I have read and agree to the{" "}
-                        <a href="#" className="text-primary">
-                            terms &amp; conditions
-                        </a>
+                        {dictionary?.aggreetoTerms} {" "}
+                        <Link href={`/${lang}/terms`} className="text-primary">
+                            {dictionary?.termsAndConditions}
+                            {/* terms &amp; conditions */}
+                        </Link>
                     </label>
                 </div>
             </div>
@@ -121,7 +124,7 @@ const RegisterForm = () => {
                     type="submit"
                     className="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
                 >
-                    create account
+                    {dictionary?.createAcc}
                 </button>
             </div>
             {
