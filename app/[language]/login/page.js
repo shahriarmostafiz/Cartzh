@@ -26,7 +26,7 @@ const LoginPage = async ({ params: { language } }) => {
                     {dictionary?.welcomeBack}
                 </p>
                 <LoginForm lang={language} dictionary={dictionary} />
-                <SocialLogin page={"login"} dictionary={dictionary} />
+                <SocialLogin page={"login"} dictionary={dictionary} lang={language} />
             </div>
         </div>
 
