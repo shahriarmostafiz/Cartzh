@@ -6,6 +6,11 @@ import { getDictionary } from '../dictionary';
 import NoProductsFound from '@/components/NoProductsFound';
 // import { getDictionary } from '../dictionary';
 
+export const metadata = {
+    title: 'Wishlist - LWSKart',
+    description: 'Discover LWSKart, your ultimate online destination for stylish and high-quality furniture. Explore a curated selection of living room,  bedroom, kitchen, and outdoor furniture designed to enhance your home. Enjoy exceptional craftsmanship, competitive prices, and a seamless shopping experience, backed by excellent customer service and fast shipping. Transform your living space with LWSKart – where quality meets style..',
+}
+
 const page = async ({ params: { language } }) => {
     const session = await auth()
     const user = session?.user
