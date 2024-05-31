@@ -35,7 +35,7 @@ const ProductCard = async ({ lang, product, dictionary }) => {
                         <i className="fa-solid fa-magnifying-glass" />
                     </Link>
 
-                    <WishListAction dictionary={dictionary} productId={product?.id} userId={userInfo?.id} wishList={userInfo?.wishList} iconButton={true} />
+                    <WishListAction lang={lang} dictionary={dictionary} productId={product?.id} userId={userInfo?.id} wishList={userInfo?.wishList} iconButton={true} />
 
                     {/* <Link
                         href="#"
@@ -81,7 +81,7 @@ const ProductCard = async ({ lang, product, dictionary }) => {
                 session?.user && userInfo?.id ? (
                     product?.stock > 1 ?
                         <AddToCart dictionary={dictionary} productId={product?.id} userId={userInfo?.id} quantity={1} />
-                        : <WishListAction dictionary={dictionary} productId={product?.id} userId={userInfo?.id} wishList={userInfo?.wishList} />
+                        : <WishListAction dictionary={dictionary} productId={product?.id} userId={userInfo?.id} wishList={userInfo?.wishList} lang={lang} />
                 ) : <Link
                     href={`/detail/${product?.id}`}
                     className="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition"

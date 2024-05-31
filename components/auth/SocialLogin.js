@@ -6,12 +6,12 @@ import { signIn } from "next-auth/react";
 const SocialLogin = ({ page, lang, dictionary }) => {
     const handleGoogleLogin = (event) => {
         console.log("pressed");
-        signIn("google", { callbackUrl: "https://zh-kart.vercel.app" })
+        signIn("google", { callbackUrl: "https://zh-kart.vercel.app/" })
     }
 
     const handeFacebookLogin = event => {
         console.log("pressed facebook")
-        signIn("facebook", { callbackUrl: "https://zh-kart.vercel.app" })
+        signIn("facebook", { callbackUrl: "https://zh-kart.vercel.app/" })
     }
     return (
         <>
