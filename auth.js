@@ -20,6 +20,7 @@ export const {
         strategy: 'jwt',
     },
     trustHost: true,
+    trustHostedDomain: true,
     providers: [
         Credentials({
             credentials: {
