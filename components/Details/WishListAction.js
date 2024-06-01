@@ -8,7 +8,7 @@ const WishListAction = ({ userId, wishList, productId, lang, dictionary, iconBut
     let isLiked = false
     const router = useRouter()
     if (userId) {
-        isLiked = wishList.includes(productId)
+        isLiked = wishList?.includes(productId)
     }
     const [liked, setLiked] = useState(isLiked)
     const toggleFavourite = async () => {

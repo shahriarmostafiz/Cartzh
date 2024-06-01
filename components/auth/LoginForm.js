@@ -21,11 +21,11 @@ const LoginForm = ({ lang, dictionary }) => {
             const response = await login({ email, password })
             console.log(response);
             if (response.error) {
-
+                console.log(error);
                 setLoginError(response.error)
             }
             else {
-                // window.location.reload()
+                window.location.reload()
                 // router.push("/")
 
 
