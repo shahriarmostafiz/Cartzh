@@ -143,12 +143,12 @@ export async function handleAddressEdit(userId, info) {
 }
 export async function handlePersonalInfo(userId, info) {
     await connectMongo()
+
     // console.log(userId);
     // console.log(info)
 
     const updates = {
         name: info?.name,
-        email: info?.email,
         phone: info?.phone
     }
     try {
@@ -161,7 +161,8 @@ export async function handlePersonalInfo(userId, info) {
     }
     catch (error) {
         console.log(error);
-        return "error in update "
+        // return "error in update "
+        throw new Error(error)
     }
 }
 

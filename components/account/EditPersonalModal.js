@@ -3,8 +3,10 @@ import React from 'react';
 import crossIcon from "@/public/close.svg"
 import Image from 'next/image';
 import { handlePersonalInfo } from '@/action';
+import { useState } from 'react';
 
 const EditPersonalInfoModal = ({ editInfo, closeThis, lang, dictionary }) => {
+    const [editError, setEditError] = useState(false)
 
     const handleEdit = async (event) => {
         event.preventDefault()
@@ -13,19 +15,23 @@ const EditPersonalInfoModal = ({ editInfo, closeThis, lang, dictionary }) => {
         const formData = new FormData(event.currentTarget)
         const name = formData.get("name")
 
-
-        const email = formData.get("email")
         const phone = formData.get("phone")
 
         const info = {
 
-            email, phone, name
+            phone, name
 
 
         }
+
         // console.log(addressInfo);
-        const res = await handlePersonalInfo(editInfo?.id, info)
-        console.log(res);
+        try {
+            const res = await handlePersonalInfo(editInfo?.id, info)
+            console.log(res);
+
+        } catch (error) {
+            setEditError("error in updating ")
+        }
         // if (addressInfo?.shipping) {
         //     console.log("shipping was given");
         // } else {
@@ -41,6 +47,9 @@ const EditPersonalInfoModal = ({ editInfo, closeThis, lang, dictionary }) => {
             <div className="relative w-1/4 mx-auto bg-white p-4 border border-slate-600/50 rounded-lg shadow-lg shadow-slate-400/10">
                 <div className=" border border-gray-200 p-4 rounded">
                     <h3 className="text-lg font-medium capitalize mb-4">{dictionary?.editPersonalInfo} </h3>
+                    {
+                        editError && <p className="text-red-500">{editError}</p>
+                    }
                     <form className="space-y-4" onSubmit={handleEdit}>
 
                         <div>
@@ -62,18 +71,7 @@ const EditPersonalInfoModal = ({ editInfo, closeThis, lang, dictionary }) => {
 
 
 
-                        <div>
-                            <label htmlFor="email" className="text-gray-600">
-                                {dictionary?.emailAddress}
-                            </label>
-                            <input type="email"
-                                defaultValue={
-                                    editInfo?.email
-                                }
-                                required
-                                // disabled
-                                name="email" id="email" className="input-box disabled:border-none" />
-                        </div>
+
                         <div>
                             <label htmlFor="phone" className="text-gray-600">
                                 {dictionary?.phone}
@@ -86,6 +84,13 @@ const EditPersonalInfoModal = ({ editInfo, closeThis, lang, dictionary }) => {
                                 required name="phone" id="phone" className="input-box" />
                         </div>
 
+                        <div>
+                            <label htmlFor="email" className="text-gray-600">
+                                {dictionary?.emailAddress}
+                            </label>
+                            <p className="py-2">{editInfo?.email}</p>
+                        </div>
+
 
                         <button
                             type="submit"
@@ -96,6 +101,7 @@ const EditPersonalInfoModal = ({ editInfo, closeThis, lang, dictionary }) => {
                         </button>
 
                     </form>
+
                 </div>
                 <button onClick={() => closeThis()}>
                     <Image
