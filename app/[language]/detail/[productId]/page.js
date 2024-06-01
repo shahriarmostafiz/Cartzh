@@ -24,6 +24,9 @@ export async function generateMetadata({ params: { language, productId } }) {
 const page = async ({ params: { language, productId } }) => {
     console.log(productId);
     const product = await getAProduct(productId)
+    if (!product) {
+        return notFound()
+    }
     const dictionary = await getDictionary(language)
     return (
 

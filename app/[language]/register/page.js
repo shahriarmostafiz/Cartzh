@@ -18,7 +18,7 @@ const RegisterPage = async ({ params: { language } }) => {
 
                 <RegisterForm lang={language} dictionary={dictionary} />
 
-                <SocialLogin lang={language} />
+                <SocialLogin lang={language} dictionary={dictionary} />
 
             </div>
         </div>

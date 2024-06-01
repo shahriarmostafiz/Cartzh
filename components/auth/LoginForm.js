@@ -25,7 +25,8 @@ const LoginForm = ({ lang, dictionary }) => {
                 setLoginError(response.error)
             }
             else {
-                window.location.reload()
+                // window.location.reload()
+                router.push("/")
                 // router.push("/")
 
 
