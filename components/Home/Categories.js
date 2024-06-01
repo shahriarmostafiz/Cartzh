@@ -43,7 +43,7 @@ const Categories = ({ lang, langCategories, shopbyCategory }) => {
             <div className="grid grid-cols-3 gap-3">
                 {
                     categoryData?.map(category => <Link
-                        href={`${lang}/categories/${category.category.toLowerCase()}`}
+                        href={`/${lang}/categories/${category.category.toLowerCase()}`}
                         className="relative rounded-sm overflow-hidden group" key={category.category}>
                         <Image
                             src={category.image}

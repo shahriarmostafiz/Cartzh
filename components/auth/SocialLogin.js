@@ -41,9 +41,9 @@ const SocialLogin = ({ page, lang, dictionary }) => {
                 {
                     page === "login" ? "Don't have account?  " : "Already have account?"
                 }
-                {page === "login" ? <Link href={`${lang}/register`} className="text-primary">
+                {page === "login" ? <Link href={`/${lang}/register`} className="text-primary">
                     {dictionary?.registerNow}
-                </Link> : <Link href={`${lang}/login`}
+                </Link> : <Link href={`/${lang}/login`}
                     className="text-primary">{dictionary?.loginNow}</Link>}
             </p>
         </>
