@@ -13,6 +13,7 @@
     "@emailjs/browser": "^4.3.3",
     "@formatjs/intl-localematcher": "^0.5.4",
     "@fortawesome/fontawesome-free": "^6.5.2",
+    "@plaiceholder/next": "^3.0.0",
     "@react-pdf/renderer": "^3.4.4",
     "@tailwindcss/forms": "^0.5.7",
     "bcryptjs": "^2.4.3",
@@ -25,9 +26,11 @@
     "next-auth": "^5.0.0-beta.18",
     "next-share": "^0.27.0",
     "nodemailer": "^6.9.13",
+    "plaiceholder": "^3.0.0",
     "react": "^18",
     "react-dom": "^18",
-    "react-pdf": "^8.0.2"
+    "react-pdf": "^8.0.2",
+    "sharp": "^0.33.4"
   },
   "devDependencies": {
     "eslint": "^8",

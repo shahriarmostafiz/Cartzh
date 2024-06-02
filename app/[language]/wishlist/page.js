@@ -34,3 +34,8 @@ const page = async ({ params: { language } }) => {
 };
 
 export default page;
+
+export async function generateStaticParams() {
+    let lang = ["en", "bn"]
+    return lang.map(l => ({ language: l }))
+}

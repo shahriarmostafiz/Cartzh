@@ -1,4 +1,6 @@
 import { getUserInfo, getUsersCartInfo } from '@/db/queries';
+// import { getUserInfo, getUsersCartInfo } from ';
+// import { getUserInfo } from '@/db/queries';
 import Link from 'next/link';
 
 const LoggedInUserStats = async ({ email, dictionary, lang }) => {
