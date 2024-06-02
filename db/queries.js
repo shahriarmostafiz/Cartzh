@@ -358,21 +358,26 @@ export async function getCartProducts(productIds) {
 export async function updateWishList(productId, userId) {
     await connectMongo()
     // console.log(recipeId, userId);
-    const user = await userModel.findById(userId)
-    if (user) {
-        if (!user.wishList) {
-            // If not, create the wishlist property as an empty array
-            user.wishList = [];
-        }
-        const foundProduct = await user?.wishList.find(id => id.toString() === productId)
-        if (foundProduct) {
-            await user.wishList.pull(productId)
-        }
-        else {
-            await user.wishList.push(productId)
+    try {
+        const user = await userModel.findById(userId)
+        if (user) {
+            if (!user.wishList) {
+                // If not, create the wishlist property as an empty array
+                user.wishList = [];
+            }
+            const foundProduct = await user?.wishList.find(id => id.toString() === productId)
+            if (foundProduct) {
+                await user.wishList.pull(productId)
+            }
+            else {
+                await user.wishList.push(productId)
 
+            }
+            user.save()
         }
-        user.save()
+        return "updated"
+    } catch (error) {
+        return "failed"
     }
 }
 // export async function updateCartInfoToPaid(productIds){

@@ -93,11 +93,20 @@ export async function addToCart(data) {
 export async function handleWish({ productId, userId }) {
     try {
         // console.log(recipeId, "was given ");
-        await updateWishList(productId, userId)
+        const res = await updateWishList(productId, userId)
+        if (res === "updated") {
+            revalidatePath("/")
+            return "updated"
+        }
+        else {
+            revalidatePath("/")
+            return "failed"
+        }
+
     } catch (error) {
         throw error
     }
-    revalidatePath("/")
+
 }
 
 export async function handleOrder(orderInfo) {

@@ -15,9 +15,11 @@ const WishListAction = ({ userId, wishList, productId, lang, dictionary, iconBut
         if (userId) {
 
             console.log(userId);
-            await handleWish({ productId, userId })
+            const res = await handleWish({ productId, userId })
             // const userData = await handleUsrData(userId)
-            setLiked(!liked)
+            if (res === "updated") {
+                setLiked(!liked)
+            }
             // setAuth(userData)
             // console.log(userData);
         } else {
