@@ -360,6 +360,10 @@ export async function updateWishList(productId, userId) {
     // console.log(recipeId, userId);
     const user = await userModel.findById(userId)
     if (user) {
+        if (!user.wishList) {
+            // If not, create the wishlist property as an empty array
+            user.wishList = [];
+        }
         const foundProduct = await user?.wishList.find(id => id.toString() === productId)
         if (foundProduct) {
             await user.wishList.pull(productId)
