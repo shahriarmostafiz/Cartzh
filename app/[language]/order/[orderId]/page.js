@@ -13,7 +13,7 @@ const page = async ({ params: { language, orderId } }) => {
     console.log(orderInfo);
     const dictionary = await getDictionary(language)
     return (
-        <div className="bg-[url('/cg.jpg')]">
+        <div className="bg-[url('/cg.jpg')] bg-cover min-h-screen">
             {/* {
                 orderInfo?.orderSummery?.map(info => <h1 key={info} >{
                     info
