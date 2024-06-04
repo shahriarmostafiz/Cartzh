@@ -1,5 +1,6 @@
 import { auth } from '@/auth';
 import WishListAction from '@/components/Details/WishListAction';
+import ProductSchema from '@/components/ProductSchema/ProductSchema';
 import AddToCart from '@/components/shared/AddToCart';
 import { getUserInfo } from '@/db/queries';
 import Image from 'next/image';
@@ -15,6 +16,7 @@ const ProductCard = async ({ lang, product, dictionary }) => {
 
     return (
         <div className="bg-white shadow rounded overflow-hidden group flex flex-col hover:border-t-2 hover:border-primary">
+
             <div className="relative">
                 <Image
                     src={product?.gallery[0]}
@@ -89,6 +91,7 @@ const ProductCard = async ({ lang, product, dictionary }) => {
                     {dictionary?.viewDetails}
                 </Link>
             }
+            <ProductSchema product={product} />
         </div>
 
     );

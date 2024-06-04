@@ -43,7 +43,7 @@ export async function getProductsBySearchAndFilter(searchTerm, category, minPric
                 { brand: { $regex: searchReg } }
             ]
         }).select(
-            ["name", "gallery", "discountedPrice", "category", "price", "rating", "size", "reviews", "stock"]).lean()
+            ["name", "gallery", "discountedPrice", "category", "price", "rating", "size", "reviews", "stock", "description", "brand"]).lean()
 
         // console.log(allproducts, "was fetched");
         productAmmoutData = [...allproducts]
@@ -77,26 +77,11 @@ export async function getProductsBySearchAndFilter(searchTerm, category, minPric
             data: replaceIDinArray(products),
             ammount: replaceIDinArray(productAmmoutData)
         }
-        // if (maxPrice) {
-        //     products = products.filter(product => product.discountedPrice < parseInt(maxPrice))
 
-        // }
-
-
-        // if (category) {
-        //     // console.log("categoryGiven", category);
-        //     const categoryMatch = category.split("|")
-        //     // console.log(categoryMa);
-        //     products = products.filter(product => {
-        //         const productCategory = product.category.toLowerCase()
-        //         return categoryMatch.includes(productCategory)
-        //     })
-
-        // }
     }
     else {
         const allproducts = await productModel.find().select(
-            ["name", "gallery", "discountedPrice", "price", "rating", "category", "size", "reviews", "stock"]).lean()
+            ["name", "gallery", "discountedPrice", "price", "rating", "category", "size", "reviews", "stock", "description", "brand"]).lean()
         productAmmoutData = [...allproducts]
         products = [...allproducts]
         // console.log();
@@ -108,11 +93,7 @@ export async function getProductsBySearchAndFilter(searchTerm, category, minPric
                 const productCategory = product.category.toLowerCase()
                 return categoryMatch.includes(productCategory)
             })
-            // console.log(replaceIDinArray(newProducts), "new product");
-            // return {
-            //     data: replaceIDinArray(products),
-            //     ammount: productAmmoutData
-            // }
+
         }
         if (minPrice && maxPrice) {
             products = products.filter(product => {
@@ -121,23 +102,13 @@ export async function getProductsBySearchAndFilter(searchTerm, category, minPric
             })
 
 
-            // if (minPrice) {
-            //     products = products.filter(product => product.discountedPrice > parseInt(minPrice))
 
-            // }
-            // if (maxPrice) {
-            //     products = products.filter(product => product.discountedPrice > parseInt(maxPrice))
-
-            // }
         }
         if (size) {
             // products = products.filter(product => product.size === size)
             // console.log(size);
             products = products.filter(product => product.size === size)
-            // let sizeArray = products.map(product=> console.log(product.siz);) 
-            // console.log(pro);
-            // let sizeMatched = products.filter(product => product.size === size)
-            // console.log(sizeMatched);
+
         }
 
 
@@ -150,90 +121,7 @@ export async function getProductsBySearchAndFilter(searchTerm, category, minPric
     }
 }
 
-// export async function getProductsBySearchAndFilter(searchTerm, category, minPrice, maxPrice, size) {
-//     await connectMongo()
-//     let products = []
-//     let productAmmoutData = []
-//     let query 
-//     if (searchTerm) {
-//         const searchReg = new RegExp(searchTerm, "i")
-//         query = {
-//             $or: [
-//                 { name: { $regex: searchReg } },
-//                 { category: { $regex: searchReg } },
-//                 { brand: { $regex: searchReg } }
-//             ]
-//         }
-//     }
-//     // const destReg = new RegExp(destination, "i")
 
-
-//     const allproducts = await productModel.find(query).select(
-//         ["name", "gallery", "discountedPrice", "category", "price", "rating", "reviews"]).lean()
-//     productAmmoutData = [...allproducts]
-//     products = [...allproducts]
-
-//     if (category) {
-//         const categoryMatch = category.split("|")
-//         products = products.filter(product => {
-//             const productCategory = product.category.toLowerCase()
-//             return categoryMatch.includes(productCategory)
-//         })
-
-//     }
-//     if (minPrice && maxPrice) {
-//         products = products.filter(product => {
-//             return product.discountedPrice > parseInt(minPrice) && product.discountedPrice < Number(maxPrice)
-
-//         })
-
-//     }
-//     if (size) {
-//         // const categoryMatch = category.split("|")
-//         // products = products.filter(product => {
-//         //     const productCategory = product.category.toLowerCase()
-//         //     return categoryMatch.includes(productCategory)
-//         // })
-//         const sizeToMatch = size.split("|")
-//         products = products.filter(product => {
-//             const productSize = product.size.toLowerCase()
-//             return sizeToMatch.includes(productSize)
-//         })
-//     }
-
-
-
-//     // else {
-//     //     const allproducts = await productModel.find().select(
-//     //         ["name", "gallery", "discountedPrice", "price", "rating", "category", "reviews"]).lean()
-//     //     productAmmoutData = [...products]
-//     //     products = [...allproducts]
-//     //     if (category) {
-//     //         // console.log(category is "");
-//     //         const categoryMatch = category.split("|")
-//     //         products = products.filter(product => {
-//     //             const productCategory = product.category.toLowerCase()
-//     //             return categoryMatch.includes(productCategory)
-//     //         })
-
-//     //     }
-//     //     if (minPrice && maxPrice) {
-//     //         products = products.filter(product => {
-//     //             return product.discountedPrice > parseInt(minPrice) && product.discountedPrice < parseInt(maxPrice)
-
-//     //         })
-
-//     //     }
-
-
-//     //     if (products.length) {
-//     //         return {
-//     //             data: replaceIDinArray(products),
-//     //             ammount: replaceIDinArray(productAmmoutData)
-//     //         }
-//     //     }
-//     // }
-// }
 
 export async function getAProduct(id) {
     await connectMongo()
@@ -256,7 +144,7 @@ export async function getAProduct(id) {
 export async function getNewArrivals() {
     await connectMongo()
     const products = await productModel.find().sort({ createdAt: 1 }).limit(4).select(
-        ["name", "gallery", "discountedPrice", "price", "rating", "reviews", "stock"]
+        ["name", "gallery", "discountedPrice", "price", "rating", "reviews", "stock", "description", "brand"]
     ).lean()
     return replaceIDinArray(products)
 
@@ -265,7 +153,7 @@ export async function getTrendingProducts() {
     await connectMongo()
 
     const products = await productModel.find().sort({ updatedAt: -1 }).limit(4).select(
-        ["name", "gallery", "discountedPrice", "price", "rating", "reviews", "stock"]
+        ["name", "gallery", "discountedPrice", "price", "rating", "reviews", "stock", "description", "brand"]
     ).lean()
     return replaceIDinArray(products)
 
@@ -304,7 +192,7 @@ export async function getProductsByCategory(name) {
     await connectMongo()
     const products = await productModel.find(
         { category: { $regex: new RegExp(name, "i") } }
-    ).select(["name", "gallery", "discountedPrice", "price", "rating", "reviews", "stock"]).lean()
+    ).select(["name", "gallery", "discountedPrice", "price", "rating", "reviews", "stock", "description", "brand"]).lean()
     if (products.length) {
         return replaceIDinArray(products)
     } else {
@@ -362,7 +250,7 @@ export async function updateWishList(productId, userId) {
         const user = await userModel.findById(userId)
         if (user) {
             if (!user.wishList) {
-                // If not, create the wishlist property as an empty array
+
                 user.wishList = [];
             }
             const foundProduct = await user.wishList.find(id => id.toString() === productId)
@@ -384,15 +272,7 @@ export async function updateWishList(productId, userId) {
         return "failed"
     }
 }
-// export async function updateCartInfoToPaid(productIds){
-// await connectMongo()
-// const cartProducts = await cartModel.find({
-//     productId: {$in: productIds}
-// })
-// if(cartProducts){
-//     await 
-// }
-// }
+
 
 export async function placeOrder(info) {
 
@@ -405,12 +285,7 @@ export async function placeOrder(info) {
             const updateCate = await updateCartStatus(userId, info.productIds)
             const result = res.toObject();
             return replaceObjectId(result)
-            // console.log(result);
-            // console.log();
-            // console.log(newRes, "in placeOrder")
-            // return ("sucess");
 
-            // return replaceObjectId(res)
         }
 
 
@@ -430,8 +305,7 @@ export async function updateCartStatus(userId, productIds) {
             {
                 $set: { status: 'paid' }
             }
-            // { userId: userId, productIds: { $all: productIds } },
-            // { $set: { status: 'paid' } }
+
         );
         console.log('Cart statuses updated to paid');
         return res
@@ -445,9 +319,7 @@ export async function updateUserAddress(userId, updates) {
     await connectMongo()
     console.log("id", userId);
     console.log("updates", updates);
-    // const updateInfo = {
-    //     [propertyName]: info
-    // }
+
     try {
         const res = await userModel.findByIdAndUpdate(userId, updates, { new: true })
         if (res) {
