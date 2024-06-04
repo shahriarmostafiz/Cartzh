@@ -80,7 +80,7 @@ const NavBar = async ({ lang }) => {
                 <div className="flex items-center justify-between flex-grow md:pl-12 py-5">
                     <div className="flex items-center space-x-6 capitalize">
                         <Link
-                            href="/"
+                            href={`/${lang}`}
                             className="text-gray-200 hover:text-white transition"
                         >
                             {dictionary?.home}
@@ -91,10 +91,14 @@ const NavBar = async ({ lang }) => {
                         >
                             {dictionary?.shop}
                         </Link>
-                        <Link href="#" className="text-gray-200 hover:text-white transition">
+                        <Link
+                            href={`/${lang}/about`}
+                            className="text-gray-200 hover:text-white transition">
                             {dictionary?.aboutUs}
                         </Link>
-                        <Link href="#" className="text-gray-200 hover:text-white transition">
+                        <Link
+                            href={`/${lang}/contact`}
+                            className="text-gray-200 hover:text-white transition">
                             {dictionary?.contactUs}
                         </Link>
                         <LanguageSwitcher />

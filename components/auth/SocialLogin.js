@@ -7,6 +7,7 @@ const SocialLogin = ({ page, lang, dictionary }) => {
     const handleGoogleLogin = (event) => {
         console.log("pressed");
         signIn("google", { callbackUrl: "https://zh-kart.vercel.app" })
+        // signIn("google", { callbackUrl: "http://localhost:3000" })
     }
 
     const handeFacebookLogin = event => {

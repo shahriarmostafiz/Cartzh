@@ -4,6 +4,7 @@ import { getUserInfo, getWishListProducts } from '@/db/queries';
 import React from 'react';
 import { getDictionary } from '../dictionary';
 import NoProductsFound from '@/components/NoProductsFound';
+import BreadCrumb from '@/components/shared/BreadCrumb';
 // import { getDictionary } from '../dictionary';
 
 export const metadata = {
@@ -25,11 +26,20 @@ const page = async ({ params: { language } }) => {
     }
     const dictionary = await getDictionary(language)
     return (
-        <div className=" container grid grid-cols-4 py-6">
-            {
-                products?.length ? products?.map(product => <ProductCard key={product?.id} dictionary={dictionary} lang={language} product={product} />) : <NoProductsFound info={dictionary?.noProductsOnWishlist} />
-            }
-        </div>
+        <>
+            <BreadCrumb page={"Wishlist"} />
+            <div className="container">
+                <h1 className="text-xl text-primary uppercase font-semibold ml-4">{userInfo?.name}s wishlisted products</h1>
+                {products?.length ?
+                    <div className=" container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 py-6 gap-4">
+                        {
+                            products?.map(product => <ProductCard key={product?.id} dictionary={dictionary} lang={language} product={product} />)
+                        }
+                    </div> :
+                    <NoProductsFound info={dictionary?.noProductsOnWishlist} />}
+            </div>
+        </>
+
     );
 };
 

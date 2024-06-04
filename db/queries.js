@@ -365,7 +365,7 @@ export async function updateWishList(productId, userId) {
                 // If not, create the wishlist property as an empty array
                 user.wishList = [];
             }
-            const foundProduct = await user?.wishList.find(id => id.toString() === productId)
+            const foundProduct = await user.wishList.find(id => id.toString() === productId)
             if (foundProduct) {
                 await user.wishList.pull(productId)
             }
@@ -375,8 +375,12 @@ export async function updateWishList(productId, userId) {
             }
             user.save()
         }
+        console.log(user, "user now");
+
         return "updated"
     } catch (error) {
+        console.error("Error updating wish list:", error);
+
         return "failed"
     }
 }

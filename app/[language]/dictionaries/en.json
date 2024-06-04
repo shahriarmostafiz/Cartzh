@@ -84,7 +84,7 @@
   "notEnoughStock": "Not enough Stock",
 
   "wishList": "Wishlist",
-  "addedtoWishlist": "Added to WishList",
+  "addedtoWishlist": "Remove from WishList",
   "AddtoWishlist": "Add to Wishlist",
   "Reviews": "Reviews",
 
@@ -148,5 +148,11 @@
   "orderInfo": "Your order has been placed",
   "congrats": "Congratulations",
   "cartRemoveMessage": "Products will be removed from the cart in 30 minutes from the time they are are added to cart  if payment is not completed ",
-  "noProductsOnWishlist": "No products added to wish list"
+  "noProductsOnWishlist": "No products added to wish list",
+  "aboutUsText": "Welcome to LWSKart, your premier destination for top-quality furniture that transforms your living spaces into stylish, comfortable havens. Specializing in a wide range of products including mattresses, sofas, bedroom sets, living room essentials, and outdoor furniture, LWSKart is dedicated to meeting all your furnishing needs with elegance and affordability. \n Founded with a passion for exceptional design and a commitment to quality, LWSKart offers an extensive collection of furniture that caters to diverse tastes and preferences. Whether you're seeking a plush mattress for restful nights, a chic sofa to elevate your living room, or durable outdoor furniture to enhance your patio, we have you covered.\nAt LWSKart, we prioritize craftsmanship and customer satisfaction. Each piece in our collection is carefully curated and crafted from the finest materials, ensuring both beauty and durability. Our dedicated team of designers and artisans work meticulously to create furniture that not only looks stunning but also provides utmost comfort and functionality.\nShopping at LWSKart is designed to be a seamless and enjoyable experience. Our user-friendly website allows you to browse our vast catalog, view detailed product descriptions, and explore high-resolution images, all from the comfort of your home. We offer reliable shipping options and exceptional customer service to ensure your shopping experience is smooth and satisfying.\nJoin us at LWSKart, where we are committed to helping you create inviting, stylish, and comfortable spaces. Thank you for choosing LWSKart, where quality meets affordability, and style meets comfort.",
+  "contactInfo": {
+    "address": "7644/B, Banani, Dhaka, Bangladesh",
+    "phone": "+8801234567",
+    "email": "info@lwskart.com"
+  }
 }

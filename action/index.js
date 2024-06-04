@@ -94,6 +94,7 @@ export async function handleWish({ productId, userId }) {
     try {
         // console.log(recipeId, "was given ");
         const res = await updateWishList(productId, userId)
+        console.log(res, "At index");
         if (res === "updated") {
             revalidatePath("/")
             return "updated"

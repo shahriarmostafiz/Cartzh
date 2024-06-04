@@ -7,6 +7,7 @@ import React from 'react';
 import { getDictionary } from '../dictionary';
 import Link from 'next/link';
 import NoProductsFound from '@/components/NoProductsFound';
+import BreadCrumb from '@/components/shared/BreadCrumb';
 
 export const metadata = {
     title: 'Cart - LWSKart',
@@ -41,29 +42,32 @@ const page = async ({ params: { language } }) => {
     }
     const dictionary = await getDictionary(language)
     return (
-        <div className="container">
-            {
-                checkoutProducts?.length ? (
-                    <>
-                        <h1 className="text-center text-lg font-medium py-4 text-primary">{dictionary?.cartRemoveMessage}</h1>
-                        {
-                            checkoutProducts?.map(product => <CartCard key={product?.id} lang={language} quantity={getQuantity(cartInfo, product?.id)} info={product} userId={userInfo?.id} />)
-                        }
-                        <div className="flex justify-center items-center py-4">
-                            <Link
-                                href={`/${language}/checkout`}
-                                className="w-80  py-3 px-4 text-center text-white bg-primary border border-primary rounded-md hover:bg-transparent hover:text-primary transition font-medium"
+        <>
+            <BreadCrumb page={"Cart"} />
+            <div className="container">
+                {
+                    checkoutProducts?.length ? (
+                        <>
+                            <h1 className="text-center text-lg font-medium py-4 text-primary">{dictionary?.cartRemoveMessage}</h1>
+                            {
+                                checkoutProducts?.map(product => <CartCard key={product?.id} lang={language} quantity={getQuantity(cartInfo, product?.id)} info={product} userId={userInfo?.id} />)
+                            }
+                            <div className="flex justify-center items-center py-4">
+                                <Link
+                                    href={`/${language}/checkout`}
+                                    className="w-80  py-3 px-4 text-center text-white bg-primary border border-primary rounded-md hover:bg-transparent hover:text-primary transition font-medium"
 
-                            >
+                                >
 
-                                Checkout  </Link>
+                                    Checkout  </Link>
 
-                        </div>
-                    </>
+                            </div>
+                        </>
 
-                ) : <NoProductsFound info={dictionary?.noProductsAdded} />
-            }
-        </div>
+                    ) : <NoProductsFound info={dictionary?.noProductsAdded} />
+                }
+            </div>
+        </>
     );
 };
 

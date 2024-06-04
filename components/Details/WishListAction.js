@@ -30,7 +30,7 @@ const WishListAction = ({ userId, wishList, productId, lang, dictionary, iconBut
     return (
         <button
             onClick={toggleFavourite}
-            className={`${liked && "  border-primary text-primary hover:text-gray-600"}  ${iconButton ? "" : "border border-gray-300 text-gray-600 px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:text-primary transition text-center"}`}
+            className={`${liked && "  border-primary text-primary  text-center flex items-center justify-center hover:bg-gray-800 transition"}  ${iconButton ? "" : "border border-gray-300 text-gray-600 px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:text-primary transition text-center"}`}
         >
             {
                 iconButton ? <span
@@ -40,10 +40,10 @@ const WishListAction = ({ userId, wishList, productId, lang, dictionary, iconBut
                 >
                     {liked ? <i className="fa-solid fa-heart" /> : <i className="fa-regular fa-heart"></i>}
                 </span> : (
-                    <>
+                    <span className="w-full flex justify-center items-center gap-2">
                         <i className={`fa-solid fa-heart ${liked && "text-primary"} `} />
                         {liked ? dictionary?.addedtoWishlist : dictionary?.AddtoWishlist}
-                    </>)
+                    </span>)
             }
         </button>
     );

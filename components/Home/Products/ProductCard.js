@@ -14,7 +14,7 @@ const ProductCard = async ({ lang, product, dictionary }) => {
     }
 
     return (
-        <div className="bg-white shadow rounded overflow-hidden group flex flex-col">
+        <div className="bg-white shadow rounded overflow-hidden group flex flex-col hover:border-t-2 hover:border-primary">
             <div className="relative">
                 <Image
                     src={product?.gallery[0]}
