@@ -6,7 +6,7 @@ import Link from 'next/link';
 const Sale = ({ lang }) => {
     return (
         <div className="container pb-16">
-            <Link href={`/${lang}/shop`}>
+            <Link prefetch={false} href={`/${lang}/shop`}>
                 <Image src={offer} alt="ads" className="w-full" />
             </Link>
         </div>

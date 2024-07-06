@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react'
 import Image from 'next/image';
-import Logo from "@/public/logo.svg"
+import Logo from "@/public/logo.png"
 import { auth } from '@/auth';
 import LoggedInUserStats from './LoggedInUserStats';
 import Search from './Search';
@@ -11,10 +11,10 @@ const Header = async ({ lang }) => {
     const session = await auth()
     const dictionary = await getDictionary(lang)
     return (
-        <header className="py-4 shadow-sm bg-white">
+        <header className="py-3 shadow-sm bg-white">
             <div className="container flex items-center justify-between">
                 <Link href={`/${lang}`}>
-                    <Image src={Logo} alt="Logo" className="w-32" />
+                    <Image src={Logo} alt="Logo" className="w-14 rounded-full" />
                 </Link>
                 <Search dictionaryValue={dictionary?.search} />
                 {

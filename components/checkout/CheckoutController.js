@@ -15,15 +15,7 @@ const CheckoutController = ({ checkoutProducts, cartInfo, userInfo, lang, dictio
     const router = useRouter()
     const [orderError, setOrderErr] = useState(null)
 
-    // const [orderInfo, setOrderInfo] = useState({
 
-    // })
-    // userId={userInfo?.id} userEmail={userInfo?.email} billingAddress={userInfo?.billingAddress}
-    // const handleOrderInfo = info => {
-    //     // event.preventDefault()
-    //     setOrderInfo(prev => ({ ...prev, info }))
-    // }
-    // fname, lname, company, region, address, city, phone, email
     const handleForm = async (event) => {
         event.preventDefault()
         const formData = new FormData(event.currentTarget)

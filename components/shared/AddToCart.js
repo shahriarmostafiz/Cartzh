@@ -43,20 +43,3 @@ const AddToCart = ({ quantity, userId, orderError, page, productId, lang, dictio
 
 export default AddToCart;
 
-// //productId: {
-// type: String,
-//     required: true
-//     },
-// userId: {
-//     type: String,
-//         required: true
-// },
-// quantity: {
-//     type: Number,
-//         required: true
-// },
-// status: {
-//     type: String,
-//         required: true,
-//         default: "pending"
-// },

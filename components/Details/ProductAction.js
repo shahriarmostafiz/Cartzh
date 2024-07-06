@@ -42,11 +42,13 @@ const ProductAction = ({ product, userId, wishList, lang, dictionary }) => {
                 </div>
             </div>
             <div className="mt-6 flex gap-3 border-b border-gray-200 pb-5 pt-5">
-                <AddToCart orderError={orderError}
-                    dictionary={dictionary}
-                    lang={lang}
-                    userId={userId}
-                    quantity={orderAmmount} page={"details"} productId={product?.id} />
+                {
+                    product?.stock > 0 && <AddToCart orderError={orderError}
+                        dictionary={dictionary}
+                        lang={lang}
+                        userId={userId}
+                        quantity={orderAmmount} page={"details"} productId={product?.id} />
+                }
 
                 <WishListAction dictionary={dictionary} wishList={wishList} productId={product?.id} lang={lang} userId={userId} />
             </div>

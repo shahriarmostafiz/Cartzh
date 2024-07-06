@@ -139,14 +139,3 @@ export default RegisterForm;
 
 
 
-// const res = await fetch("/api/auth/register", {
-//     method: "POST",
-//     headers: {
-//         "content-type": "application/json"
-//     },
-//     body: JSON.stringify({
-//         name, email, password
-//     })
-// })
-
-// res.status === 201 && router.push("/login")

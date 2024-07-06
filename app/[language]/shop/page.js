@@ -6,8 +6,8 @@ import React from 'react';
 import { getDictionary } from '../dictionary';
 
 export const metadata = {
-    title: 'Shop-LWSKart',
-    description: 'Discover LWSKart, your ultimate online destination for stylish and high-quality furniture. Explore a curated selection of living room,  bedroom, kitchen, and outdoor furnitures designed to enhance your home. Enjoy exceptional craftsmanship, competitive prices, and a seamless shopping experience, backed by excellent customer service and fast shipping. Transform your living space with LWSKart  where quality meets style..',
+    title: 'Shop-CartZh',
+    description: 'Discover CartZh, your ultimate online destination for stylish and high-quality furniture. Explore a curated selection of living room,  bedroom, kitchen, and outdoor furnitures designed to enhance your home. Enjoy exceptional craftsmanship, competitive prices, and a seamless shopping experience, backed by excellent customer service and fast shipping. Transform your living space with CartZh  where quality meets style..',
 }
 
 const refineCategory = (category) => {

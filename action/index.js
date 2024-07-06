@@ -58,13 +58,12 @@ export async function registerUser(info) {
             return "found"
 
         }
-        //     redirect("/register?founduser=true")
-        // } else {
+
         else {
             const user = await createUser(newUser)
             return "user created"
         }
-        // }
+
 
     } catch (error) {
         console.log(error);
@@ -78,7 +77,6 @@ export async function addToCart(data) {
         quantity: parseInt(quantity),
         status: "pending"
     }
-    // console.log(cartData);
     try {
         const res = await createCart(cartData)
         revalidatePath("/")
@@ -92,7 +90,6 @@ export async function addToCart(data) {
 
 export async function handleWish({ productId, userId }) {
     try {
-        // console.log(recipeId, "was given ");
         const res = await updateWishList(productId, userId)
         console.log(res, "At index");
         if (res === "updated") {
@@ -135,14 +132,10 @@ export async function handleAddressEdit(userId, info) {
     }
 
 
-    // const updates = {
-    //     billingAddress: info?.billing ?? {},
-    //     shippingAddress: info?.shipping 
-    // }
+
     try {
 
         const res = await updateUserAddress(userId, updates)
-        // const res = await userModel.findByIdAndUpdate(userId)
         console.log(res);
         revalidatePath("/")
         return "successs"
@@ -154,8 +147,6 @@ export async function handleAddressEdit(userId, info) {
 export async function handlePersonalInfo(userId, info) {
     await connectMongo()
 
-    // console.log(userId);
-    // console.log(info)
 
     const updates = {
         name: info?.name,
@@ -164,14 +155,12 @@ export async function handlePersonalInfo(userId, info) {
     try {
 
         const res = await updateUserAddress(userId, updates)
-        // const res = await userModel.findByIdAndUpdate(userId)
         console.log(res, "in index ");
         revalidatePath("/")
         return "successs"
     }
     catch (error) {
         console.log(error);
-        // return "error in update "
         throw new Error(error)
     }
 }
@@ -189,7 +178,6 @@ export const sendEmailWithAttachment = async (pdfBuffer, orderData) => {
                 user: process.env.Nodemailer_Email,
                 pass: process.env.NodeMailer_Pass
             }
-            // Configure your email service provider here
         });
 
         let info = await transporter.sendMail({
@@ -217,13 +205,7 @@ export const sendEmailWithAttachment = async (pdfBuffer, orderData) => {
 export async function handlePdf(res) {
     const pdfBlob = await pdf(<MyDocument data={res} />).toBlob();
     const pdfBuffer = Buffer.from(await pdfBlob.arrayBuffer());
-    // const pdfBlob = await pdf(<MyDocument data={res} />).toBlob();
-    // const pdfData = await new Promise((resolve, reject) => {
-    //     const reader = new FileReader();
-    //     reader.onloadend = () => resolve(reader.result.split(',')[1]);
-    //     reader.onerror = reject;
-    //     reader.readAsDataURL(pdfBlob);
-    // });
+
     try {
         const email = await sendEmailWithAttachment(pdfBuffer, res)
         return "success"
@@ -232,15 +214,7 @@ export async function handlePdf(res) {
         console.log(error);
         throw new Error(error)
     }
-    // if (email.message === 'Email sent successfully') {
-    //     return "sucess"
 
-
-
-    // } else {
-    //     console.log('Failed to send email: ' + email.message);
-    //     return "failed to send pdf"
-    // }
 }
 export async function handleDeleteFromCart(productId, userId) {
     console.log(productId);

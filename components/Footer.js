@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from "@/public/logo.svg"
+import logo from "@/public/logo.png"
 import method from "@/public/methods.png"
 import Image from 'next/image';
 import { getDictionary } from '@/app/[language]/dictionary';
@@ -12,7 +12,7 @@ const Footer = async ({ lang }) => {
             <footer className="bg-white pt-16 pb-12 border-t border-gray-100">
                 <div className="container grid grid-cols-1 ">
                     <div className="col-span-1 space-y-4">
-                        <Image src={logo} alt="logo" className="w-30" />
+                        <Image src={logo} alt="logo" className="w-48 rounded-full" />
                         <div className="mr-2">
                             <p className="text-gray-500">
 
@@ -169,7 +169,7 @@ const Footer = async ({ lang }) => {
             {/* copyright */}
             <div className="bg-gray-800 py-4">
                 <div className="container flex items-center justify-between">
-                    <p className="text-white">© LWSKart  - All Right Reserved</p>
+                    <p className="text-white">© CartZh  - All Right Reserved</p>
                     <div>
                         <Image src={method} alt="methods" className="h-5" height={20} width={237} />
                     </div>

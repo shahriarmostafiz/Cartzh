@@ -44,10 +44,7 @@ const LanguageSwitcher = () => {
         if (path.includes("/bn")) {
             path2 = path.replace("/bn", "")
         }
-        // if (pathname.includes(selectedLanguage.code)) {
-        //     path = pathname.replace(selectedLanguage.code, lang);
 
-        // }
 
         setSelectedLanguage({ ...selectedLanguage, code: lang, language: lang === 'en' ? 'English' : 'Bangla' });
         setShowManu(false);

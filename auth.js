@@ -2,7 +2,6 @@ import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google"
 import FacebookProvider from "next-auth/providers/facebook"
-// import mongoClientPromise from "./db/mongoClientPromise";
 import Credentials from "next-auth/providers/credentials"
 import { userModel } from "./db/models/users.model";
 import bcrypt from "bcryptjs"
