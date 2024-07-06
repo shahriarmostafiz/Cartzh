@@ -59,6 +59,7 @@ const NavBar = async ({ lang }) => {
                         style={{ width: 300 }}
                     >{
                             categoryData?.map(item => <Link
+                                prefetch={false}
                                 key={item.category}
                                 href={`/${lang}/categories/${item?.category.toLowerCase()}`}
                                 className="flex items-center px-6 py-3 hover:bg-gray-100 transition"
@@ -85,7 +86,7 @@ const NavBar = async ({ lang }) => {
                         >
                             {dictionary?.home}
                         </Link>
-                        <Link
+                        <Link prefetch={false}
                             href={`/${lang}/shop`}
                             className="text-gray-200 hover:text-white transition"
                         >
