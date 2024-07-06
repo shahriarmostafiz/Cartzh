@@ -1,4 +1,3 @@
-import React from 'react';
 import { getDictionary } from '../dictionary';
 import BreadCrumb from '@/components/shared/BreadCrumb';
 
