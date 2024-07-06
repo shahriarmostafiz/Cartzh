@@ -2,6 +2,12 @@
   "name": "my-cart",
   "version": "0.1.0",
   "private": true,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
